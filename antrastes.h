@@ -2,6 +2,7 @@
 #define ANTRASTES_H
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <string>
 
@@ -17,6 +18,7 @@ struct studentai
     string pavarde;
     vector<int> pazymiai; //nd tarpiniai rezultatai
     int egzam;
+    double suma=0;
     double vidurkis;
     int mediana;
     double gal_vid, gal_med;
