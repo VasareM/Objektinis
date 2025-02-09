@@ -40,6 +40,11 @@ int main()
     //grupes studentu pazymiai
     cout << "Įveskite studentų skaičių" << endl;
     cin >> m;
+    while(ar_beda(m, 1, 20))
+    {
+        cout << "Įveskite studentų skaičių" << endl;
+        cin >> m;
+    }
     for (int i=0; i<m; i++)
     {
         studentai temp;
@@ -76,7 +81,7 @@ int main()
         {
             if (n%2==0)
             {
-                temp.mediana=(temp.pazymiai[n/2-1]+temp.pazymiai[n/2]);
+                temp.mediana=((temp.pazymiai[n/2-1]+temp.pazymiai[n/2]))/2;
             }
             else 
             {
