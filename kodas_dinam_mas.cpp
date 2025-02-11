@@ -11,7 +11,7 @@ int main()
     int m, n;
     int egz;
     vector <studentai> grupe; //vektorius-objektas, mokantis dirbti su 5vairiaus duomenimis
-    //grupes studentu pazymiai
+    //grupes studentu pazymiaiFar_beda
     
     if (nr_meniu==4)
     {
@@ -52,7 +52,7 @@ int main()
         for (int y=0; y<n; y++)
         {
             cin >> temp.P[y];
-            while (ar_beda(temp.P[y])
+            while (ar_beda(temp.P[y]))
             {
                 cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
                 cin >> temp.P[y];
