@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <algorithm> // kad veiktu sort
+#include <ctime> //rand
 
 using std::cin;
 using std::cout;
