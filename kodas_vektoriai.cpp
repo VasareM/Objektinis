@@ -3,12 +3,12 @@
 
 void spausdinimas(vector <studentai> grupe)
 {
-    cout << std::left << setw(30) << "Pavarde" << setw(25) << "Vardas" << setw(25) << "Galutinis (Vid.)" << setw(25) << "Galutinis (Med.)" << endl;
-    cout << string(100, '-') << endl;
+    cout << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    cout << string(85, '-') << endl;
     for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
     {
-        cout << std::left << setw(30) << m.pavarde << setw(25) << m.vardas;
-        cout << setw(25) << std::fixed << std::setprecision(2) << m.gal_vid << setw(25) << m.gal_med << endl;
+        cout << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
+        cout << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
     }
 }
 void mediana_skaiciavimas(vector <int> &pazymiai, int n, studentai &temp)
