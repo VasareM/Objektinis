@@ -27,9 +27,17 @@ void mediana_skaiciavimas(vector <int> &pazymiai, int n)
         //temp.mediana=median(temp.pazymiai);
 }
 string vardo_generavimas()
-{}
+{
+    vector <string> vardu_sar={"Petras", "Jonas", "Aloyzas", "Kastytis", "Gintaras", "Tomas", "Augustas", "Dovydas", "Markas"};
+    int vardo_nr=rand()%vardu_sar.size();
+    return vardu_sar[vardo_nr];
+}
 string pavardes_generavimas()
-{}
+{
+    vector <string> pavardu_sar={"Petraitis", "Jonaitis", "Sabonis", "Žukauskas", "Stankevičius", "Mačiulis", "Kudirka", "Basanavičius", "Marcinkevičius"};
+    int pavardo_nr=rand()%pavardu_sar.size();
+    return pavardu_sar[pavardo_nr];
+}
 
 int main()
 {
@@ -174,7 +182,8 @@ int main()
         studentai temp;
 
     ////////////////////////
-        temp.vardas=
+        temp.vardas=vardo_generavimas();
+        temp.pavarde=pavardes_generavimas();
     ////////////////////////
         /*
         cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
