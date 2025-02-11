@@ -5,15 +5,15 @@ void spausdinimas(vector <studentai> grupe)
 {
     cout << std::left << setw(20) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     cout << string(80, '-') << endl;
-    for (auto m:grupe) //visi elementai is eiles is grupes
+    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
     {
         cout << std::left << setw(20) << m.pavarde << setw(20) << m.vardas;
-        cout << etw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
+        cout << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
     }
 }
-void mediana_skaiciavimas(vector <int> &pazymiai, int n)
+void mediana_skaiciavimas(vector <int> &pazymiai, int n, studentai &temp)
 {
-    sort(temp.pazymiai.begin(), temp.pazymiai.end());
+    std::sort(temp.pazymiai.begin(), temp.pazymiai.end());
         {
             if (n%2==0)
             {
@@ -55,7 +55,7 @@ int main()
     if (nr_meniu==4)
     {
         cout << "Darbas baigtas" << endl;
-        break;
+        return 0;
     }
 
     if (nr_meniu==1)
@@ -64,6 +64,11 @@ int main()
         char ats;
         m=0;
         cin >> ats;
+        if (ats=='n')
+        {
+            cout << "Darbas baigtas" << endl;
+            return 0;
+        }
     while (ats=='T')
     {
         studentai temp;
@@ -96,7 +101,7 @@ int main()
         }
         temp.vidurkis=temp.suma/n;
         
-        mediana_skaiciavimas(temp.pazymiai, n);
+        mediana_skaiciavimas(temp.pazymiai, n, temp);
 
         cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
         cin >> temp.egzam;
@@ -154,7 +159,7 @@ int main()
         }
         temp.vidurkis=temp.suma/n;
         
-        mediana_skaiciavimas(temp.pazymiai, n);
+        mediana_skaiciavimas(temp.pazymiai, n, temp);
 
         temp.egzam=rand()%10+1;
         //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
@@ -203,7 +208,7 @@ int main()
         }
         temp.vidurkis=temp.suma/n;
         
-        mediana_skaiciavimas(temp.pazymiai, n);
+        mediana_skaiciavimas(temp.pazymiai, n, temp);
 
         temp.egzam=rand()%10+1;
         //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;

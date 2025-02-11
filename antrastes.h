@@ -7,6 +7,7 @@
 #include <string>
 #include <algorithm> // kad veiktu sort
 #include <ctime> //rand
+#include <random>
 
 using std::cin;
 using std::cout;
