@@ -18,7 +18,7 @@ using std::setw;
 
 struct studentai
 {
-    int N;
+    int N=0; //ateityje nebus problemu
     string vardas="var"; //default reiksmes testavimui
     string pavarde="pav";
     int *P=new int[N];
