@@ -1,5 +1,13 @@
 #include "antrastes.h"
 
+void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
+{
+    if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
+    else if (nr_rikiavimas==2) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.pavarde<b.pavarde;});
+    else if (nr_rikiavimas==3) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_vid<b.gal_vid;});
+    else if (nr_rikiavimas==4) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_med<b.gal_med;});
+    else cout << "Tokio rikiavimo būdo nėra" << endl;
+}
 int main()
 {
     srand(time(0)); //kiekvieną kartą generuojami nauji pažymiai
@@ -8,9 +16,9 @@ int main()
     int nr_failas=1; //default reiksme
     cin >> nr_failas;
     
-    cout << "Kaip išrūšiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
-    int nr_rusiavimas;
-    cin >> nr_rusiavimas;
+    cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
+    int nr_rikiavimas;
+    cin >> nr_rikiavimas;
 
     int m=0, n=15; //m-studentai, n-nd
     int paz, egz;
@@ -38,8 +46,8 @@ int main()
         while (!in.fail())
         {
             in >> temp.vardas >> temp.pavarde;
-            //temp.suma=0;
-            //temp.pazymiai.clear();
+            temp.suma=0;
+            temp.pazymiai.clear();
             for (int i=0; i<n; i++)
             {
                 in >> paz;
@@ -56,6 +64,7 @@ int main()
             grupe.push_back(temp);
             m++;
         }
+        rikiavimas(nr_rikiavimas, grupe);
         spausdinimas(grupe);
         in.close();
 

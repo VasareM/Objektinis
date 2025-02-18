@@ -17,6 +17,7 @@ using std::string;
 using std::endl;
 using std::setw;
 using std::ifstream;
+using std::sort;
 
 struct studentai
 {
@@ -48,11 +49,13 @@ void spausdinimas(vector <studentai> grupe)
     {
         cout << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
         cout << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
+        for(const auto&n:m.pazymiai) cout << n << " ";
+        cout << endl;
     }
 }
 void mediana_skaiciavimas(vector <int> &pazymiai, int n, studentai &temp)
 {
-    std::sort(temp.pazymiai.begin(), temp.pazymiai.end());
+    sort(temp.pazymiai.begin(), temp.pazymiai.end());
         {
             if (n%2==0)
             {
