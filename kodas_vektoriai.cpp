@@ -17,15 +17,19 @@ int main()
     vector <studentai> grupe; //vektorius-objektas, mokantis dirbti su 5vairiaus duomenimis
     //grupes studentu pazymiai
 
-    if (nr_failas==1) ifstream in ("kursiokai.txt");
-    else if (nr_failas==2) ifstream in ("studentai10000.txt");
-    else if (nr_failas==3) ifstream in ("studentai100000.txt");
-    else if (nr_failas==4) ifstream in ("studentai1000000.txt";)
-    else cout << "Tokio failo nėra" << endl;
+    ifstream in;
+    if (nr_failas==1) in.open("kursiokai.txt");
+    else if (nr_failas==2) in.open("studentai10000.txt");
+    else if (nr_failas==3) in.open("studentai100000.txt");
+    else if (nr_failas==4) in.open("studentai1000000.txt");
+    else 
+    {
+        cout << "Tokio failo nėra" << endl;
+        return 0;
+    }
     if(in.is_open())
     {
         studentai temp;
-        int nd_kiekis=15;
         string temporary;
         for (int i=0; i<18; i++)
         {
@@ -34,7 +38,9 @@ int main()
         while (!in.fail())
         {
             in >> temp.vardas >> temp.pavarde;
-            for (int i=0; i<nd_kiekis; i++)
+            //temp.suma=0;
+            //temp.pazymiai.clear();
+            for (int i=0; i<n; i++)
             {
                 in >> paz;
                 temp.suma+=paz;
@@ -55,7 +61,9 @@ int main()
 
     }
     
-    else cout << "Problema failo nuskaityme" << endl; 
-    return 0;
-    
+    else 
+    {
+        cout << "Problema failo nuskaityme" << endl; 
+        return 0;
+    }
 }
