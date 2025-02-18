@@ -4,6 +4,10 @@
 int main()
 {
     srand(time(0)); //kiekvieną kartą generuojami nauji pažymiai
+    cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;
+    int nr_failas=1; //default reiksme
+    cin >> nr_failas;
+
     cout << "Meniu (įveskite pasirinktos programos eigos nr.):" << endl;
     cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą" << endl;
     int nr_meniu;
