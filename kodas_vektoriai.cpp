@@ -1,5 +1,13 @@
 #include "antrastes.h"
 
+//
+/*
+papildyt įvesties meniu ir galimai output pasirinkimu
+*/
+//
+
+
+
 void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
 {
     if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
@@ -43,9 +51,9 @@ int main()
         {
             in >> temporary;
         }
-        while (!in.fail())
+        while (in >> temp.vardas >> temp.pavarde)
         {
-            in >> temp.vardas >> temp.pavarde;
+            
             temp.suma=0;
             temp.pazymiai.clear();
             for (int i=0; i<n; i++)
@@ -56,6 +64,7 @@ int main()
             }
             in >> temp.egzam;
             temp.vidurkis=temp.suma/n;
+
             mediana_skaiciavimas(temp.pazymiai, n, temp);
 
             //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
