@@ -41,46 +41,6 @@ bool ar_beda(int x, int pr=0, int pb=10)
     }
     return false;
 }
-
-void spausdinimas(vector <studentai> grupe)
-{
-    cout << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
-    cout << string(85, '-') << endl;
-    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
-    {
-        cout << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
-        cout << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
-        //for(const auto&n:m.pazymiai) cout << n << " ";
-        //cout << endl;
-    }
-}
-void spausdinimas_faile(vector <studentai> grupe)
-{
-    ofstream out ("rezultatai.txt");
-    out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
-    out << string(85, '-') << endl;
-    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
-    {
-        out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
-        out << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
-        //for(const auto&n:m.pazymiai) cout << n << " ";
-        //cout << endl;
-    }
-}
-void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas)
-{
-    rikiavimas(nr_rikiavimas, grupe);
-    if (nr_spausdinimas==1) spausdinimas(grupe);
-    else if (nr_spausdinimas==2) spausdinimas_faile(grupe);
-}
-void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
-{
-    if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
-    else if (nr_rikiavimas==2) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.pavarde<b.pavarde;});
-    else if (nr_rikiavimas==3) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_vid<b.gal_vid;});
-    else if (nr_rikiavimas==4) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_med<b.gal_med;});
-    else cout << "Tokio rikiavimo būdo nėra" << endl;
-}
 void mediana_skaiciavimas(vector <int> &pazymiai, int n, studentai &temp)
 {
     sort(temp.pazymiai.begin(), temp.pazymiai.end());
@@ -107,6 +67,51 @@ string pavardes_generavimas()
     vector <string> pavardu_sar={"Petraitis", "Jonaitis", "Sabonis", "Zukauskas", "Stankevicius", "Maciulis", "Kudirka", "Basanavicius", "Marcinkevicius"};
     int pavardo_nr=rand()%pavardu_sar.size();
     return pavardu_sar[pavardo_nr];
+}
+
+void spausdinimas(vector <studentai> grupe)
+{
+    cout << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    cout << string(85, '-') << endl;
+    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
+    {
+        cout << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
+        cout << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
+        //for(const auto&n:m.pazymiai) cout << n << " ";
+        //cout << endl;
+    }
+}
+void spausdinimas_faile(vector <studentai> grupe)
+{
+    ofstream out ("rezultatai.txt");
+    out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    out << string(85, '-') << endl;
+    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
+    {
+        out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
+        out << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
+        //for(const auto&n:m.pazymiai) cout << n << " ";
+        //cout << endl;
+    }
+}
+
+void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
+{
+    if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
+    else if (nr_rikiavimas==2) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.pavarde<b.pavarde;});
+    else if (nr_rikiavimas==3) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_vid<b.gal_vid;});
+    else if (nr_rikiavimas==4) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_med<b.gal_med;});
+    else 
+    {
+        cout << "Tokio rikiavimo būdo nėra" << endl;
+        return;
+    }
+}
+void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas)
+{
+    rikiavimas(nr_rikiavimas, grupe);
+    if (nr_spausdinimas==1) spausdinimas(grupe);
+    else if (nr_spausdinimas==2) spausdinimas_faile(grupe);
 }
 
 #endif // ANTRASTES_H
