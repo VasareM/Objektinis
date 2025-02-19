@@ -17,6 +17,7 @@ using std::string;
 using std::endl;
 using std::setw;
 using std::ifstream;
+using std::ofstream;
 using std::sort;
 
 struct studentai
@@ -52,6 +53,33 @@ void spausdinimas(vector <studentai> grupe)
         //for(const auto&n:m.pazymiai) cout << n << " ";
         //cout << endl;
     }
+}
+void spausdinimas_faile(vector <studentai> grupe)
+{
+    ofstream out ("rezultatai.txt");
+    out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    out << string(85, '-') << endl;
+    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
+    {
+        out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
+        out << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
+        //for(const auto&n:m.pazymiai) cout << n << " ";
+        //cout << endl;
+    }
+}
+void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas)
+{
+    rikiavimas(nr_rikiavimas, grupe);
+    if (nr_spausdinimas==1) spausdinimas(grupe);
+    else if (nr_spausdinimas==2) spausdinimas_faile(grupe);
+}
+void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
+{
+    if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
+    else if (nr_rikiavimas==2) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.pavarde<b.pavarde;});
+    else if (nr_rikiavimas==3) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_vid<b.gal_vid;});
+    else if (nr_rikiavimas==4) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_med<b.gal_med;});
+    else cout << "Tokio rikiavimo būdo nėra" << endl;
 }
 void mediana_skaiciavimas(vector <int> &pazymiai, int n, studentai &temp)
 {

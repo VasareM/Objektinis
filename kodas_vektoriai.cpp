@@ -2,37 +2,39 @@
 
 //
 /*
-papildyt įvesties meniu ir galimai output pasirinkimu
+papildyt galimai output pasirinkimu
+iskelt f-jas i antrastes
+testavimas su failais
 */
 //
 
 
 
-void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
-{
-    if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
-    else if (nr_rikiavimas==2) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.pavarde<b.pavarde;});
-    else if (nr_rikiavimas==3) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_vid<b.gal_vid;});
-    else if (nr_rikiavimas==4) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.gal_med<b.gal_med;});
-    else cout << "Tokio rikiavimo būdo nėra" << endl;
-}
+
 int main()
 {
     srand(time(0)); //kiekvieną kartą generuojami nauji pažymiai
-    
-    cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;
-    int nr_failas=1; //default reiksme
-    cin >> nr_failas;
-    
+    cout << "Meniu (įveskite pasirinktos programos eigos nr.):" << endl;
+    cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo" << endl;
+    int nr_meniu;
+    cin >> nr_meniu;
     cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
     int nr_rikiavimas;
     cin >> nr_rikiavimas;
-
-    int m=0, n=15; //m-studentai, n-nd
+    cout << "Kaip norėsite išvesti duomenis? \n 1 - į ekraną, 2 - į failą" << endl;
+    int nr_spausdinimas;
+    cin >> nr_spausdinimas;
+    int m=0, n=0; //m-studentai, n-nd
     int paz, egz;
     vector <studentai> grupe; //vektorius-objektas, mokantis dirbti su 5vairiaus duomenimis
     //grupes studentu pazymiai
 
+    if (nr_meniu==5)
+    {
+        cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;
+    int nr_failas=1; //default reiksme
+    cin >> nr_failas;
+    n=15;
     ifstream in;
     if (nr_failas==1) in.open("kursiokai.txt");
     else if (nr_failas==2) in.open("studentai10000.txt");
@@ -73,8 +75,7 @@ int main()
             grupe.push_back(temp);
             m++;
         }
-        rikiavimas(nr_rikiavimas, grupe);
-        spausdinimas(grupe);
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
         in.close();
 
     }
@@ -84,4 +85,180 @@ int main()
         cout << "Problema failo nuskaityme" << endl; 
         return 0;
     }
+    }
+    else if (nr_meniu==4)
+    {
+        cout << "Darbas baigtas" << endl;
+        return 0;
+    }
+
+    else if (nr_meniu==1)
+    {
+        cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+        char ats;
+        m=0;
+        cin >> ats;
+        if (ats=='n')
+        {
+            cout << "Darbas baigtas" << endl;
+            return 0;
+        }
+    while (ats=='T')
+    {
+        studentai temp;
+        cout << "Įveskite studento vardą ir pavardę" << endl;
+        cin >> temp.vardas >> temp.pavarde;
+        while (temp.vardas.size()>19 || temp.pavarde.size()>19)
+        {
+            cout << "Vardas arba pavardė per ilgi" << endl;
+            cout << "Įveskite studento vardą ir pavardę" << endl;
+            cin >> temp.vardas >> temp.pavarde;
+        }
+        cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+        cin >> n;
+        while (ar_beda(n, 1, 15))
+        {
+            cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+            cin >> n;
+        }
+        cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
+        for (int y=0; y<n; y++)
+        {
+            cin >> paz;
+            while (ar_beda(paz))
+            {
+                cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
+                cin >> paz;
+            }
+            temp.suma+=paz;
+            temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
+        }
+        temp.vidurkis=temp.suma/n;
+        
+        mediana_skaiciavimas(temp.pazymiai, n, temp);
+
+        cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
+        cin >> temp.egzam;
+        while (ar_beda(temp.egzam))
+        {
+            cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
+            cin >> temp.egzam;
+        }
+        //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
+        temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+        temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+        grupe.push_back(temp);
+        m++;
+        cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+        cin >> ats;
+        if (ats=='n')
+        {
+            break;
+        }
+    }
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+    }
+    else if (nr_meniu==2)
+    {
+        cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+        char ats;
+        m=0;
+        cin >> ats;
+    while (ats=='T')
+    {
+        studentai temp;
+        cout << "Įveskite studento vardą ir pavardę" << endl;
+        cin >> temp.vardas >> temp.pavarde;
+        while (temp.vardas.size()>19 || temp.pavarde.size()>19)
+        {
+            cout << "Vardas arba pavardė per ilgi" << endl;
+            cout << "Įveskite studento vardą ir pavardę" << endl;
+            cin >> temp.vardas >> temp.pavarde;
+        }
+        /*
+        cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+        cin >> n;
+        while (ar_beda(n, 1, 15))
+        {
+            cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+            cin >> n;
+        }
+        */
+        n=rand()%15+1;
+        for (int y=0; y<n; y++)
+        {
+            paz=rand()%10+1;
+            temp.suma+=paz;
+            temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
+        }
+        temp.vidurkis=temp.suma/n;
+        
+        mediana_skaiciavimas(temp.pazymiai, n, temp);
+
+        temp.egzam=rand()%10+1;
+        //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
+        temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+        temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+        grupe.push_back(temp);
+        m++;
+        cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+        cin >> ats;
+        if (ats=='n')
+        {
+            break;
+        }
+    }
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+    }
+    else if (nr_meniu==3)
+    {
+        cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+        char ats;
+        m=0;
+        cin >> ats;
+    while (ats=='T')
+    {
+        studentai temp;
+
+    ////////////////////////
+        temp.vardas=vardo_generavimas();
+        temp.pavarde=pavardes_generavimas();
+    ////////////////////////
+        /*
+        cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+        cin >> n;
+        while (ar_beda(n, 1, 15))
+        {
+            cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+            cin >> n;
+        }
+        */
+        n=rand()%15+1;
+        for (int y=0; y<n; y++)
+        {
+            paz=rand()%10+1;
+            temp.suma+=paz;
+            temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
+        }
+        temp.vidurkis=temp.suma/n;
+        
+        mediana_skaiciavimas(temp.pazymiai, n, temp);
+
+        temp.egzam=rand()%10+1;
+        //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
+        temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+        temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+        grupe.push_back(temp);
+        m++;
+        cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+        cin >> ats;
+        if (ats=='n')
+        {
+            break;
+        }
+    }
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+    }
+
+
 }
