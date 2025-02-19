@@ -1,15 +1,5 @@
 #include "antrastes.h"
 
-//
-/*
-papildyt galimai output pasirinkimu
-iskelt f-jas i antrastes
-testavimas su failais
-*/
-//
-
-
-
 
 int main()
 {
