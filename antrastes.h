@@ -9,6 +9,9 @@
 #include <ctime> //rand
 #include <random>
 #include <fstream>
+#include <sstream>
+#include <chrono> //laiko skaiciavimui
+#include <ctime>
 
 using std::cin;
 using std::cout;
@@ -107,6 +110,23 @@ void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
         return;
     }
 }
+/*
+void rikiavimas(int nr_rikiavimas, vector<studentai> &grupe)
+{
+    if (nr_rikiavimas == 1)
+        sort(grupe.begin(), grupe.end(), [](const studentai &a, const studentai &b) { return a.vardas < b.vardas; });
+    else if (nr_rikiavimas == 2)
+        sort(grupe.begin(), grupe.end(), [](const studentai &a, const studentai &b) { return a.pavarde < b.pavarde; });
+    else if (nr_rikiavimas == 3)
+        sort(grupe.begin(), grupe.end(), [](const studentai &a, const studentai &b) { return a.gal_vid < b.gal_vid; });
+    else if (nr_rikiavimas == 4)
+        sort(grupe.begin(), grupe.end(), [](const studentai &a, const studentai &b) { return a.gal_med < b.gal_med; });
+    else
+    {
+        cout << "Tokio rikiavimo būdo nėra" << endl;
+        return; // Prevent further execution if sorting method is invalid
+    }
+}*/
 void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas)
 {
     rikiavimas(nr_rikiavimas, grupe);

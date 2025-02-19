@@ -1,0 +1,8 @@
+Studentai10000.txt:
+Studentai100000.txt:   18341ms
+Studentai1000000.txt:  246727ms, 220034ms, 189021ms
+
+
+1
+2   18.061s
+3   570.476s

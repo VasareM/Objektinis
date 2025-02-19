@@ -21,6 +21,8 @@ int main()
 
     if (nr_meniu==5)
     {
+        //auto pradzia=std::chrono::high_resolution_clock::now(); 
+        clock_t pradzia=clock();
         cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;
     int nr_failas=1; //default reiksme
     cin >> nr_failas;
@@ -39,23 +41,22 @@ int main()
     {
         studentai temp;
         string temporary;
-        for (int i=0; i<18; i++)
+        getline(in, temporary);
+
+        while (getline(in, temporary))
         {
-            in >> temporary;
-        }
-        while (in >> temp.vardas >> temp.pavarde)
-        {
-            
-            temp.suma=0;
-            temp.pazymiai.clear();
-            for (int i=0; i<n; i++)
-            {
-                in >> paz;
-                temp.suma+=paz;
-                temp.pazymiai.push_back(paz);
-            }
-            in >> temp.egzam;
-            temp.vidurkis=temp.suma/n;
+            std::istringstream iss(temporary);
+                iss >> temp.vardas >> temp.pavarde;
+                temp.suma = 0;
+                temp.pazymiai.clear();
+                for (int i = 0; i < n; i++)
+                {
+                    iss >> paz;
+                    temp.suma += paz;
+                    temp.pazymiai.push_back(paz);
+                }
+            iss >> temp.egzam;
+            temp.vidurkis=static_cast<double>(temp.suma)/n;
 
             mediana_skaiciavimas(temp.pazymiai, n, temp);
 
@@ -67,7 +68,12 @@ int main()
         }
         spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
         in.close();
-
+        //auto pabaiga=std::chrono::high_resolution_clock::now();
+        //auto trukme = std::chrono::duration_cast<std::chrono::milliseconds>(pabaiga-pradzia);
+        //cout << "Programos vykdymo laikas: " << trukme.count() << "ms" << endl;
+        clock_t pabaiga=clock();
+        double trukme=double(pabaiga-pradzia)/CLOCKS_PER_SEC;
+        cout << "Programos vykdymo laikas: " << trukme << "s" << endl;
     }
     
     else 
