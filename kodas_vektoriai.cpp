@@ -21,66 +21,78 @@ int main()
 
     if (nr_meniu==5)
     {
-        //auto pradzia=std::chrono::high_resolution_clock::now(); 
-        clock_t pradzia=clock();
+        auto pradzia=std::chrono::high_resolution_clock::now(); 
+        //clock_t pradzia=clock();
         cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;
-    int nr_failas=1; //default reiksme
-    cin >> nr_failas;
-    n=15;
-    ifstream in;
-    if (nr_failas==1) in.open("kursiokai.txt");
-    else if (nr_failas==2) in.open("studentai10000.txt");
-    else if (nr_failas==3) in.open("studentai100000.txt");
-    else if (nr_failas==4) in.open("studentai1000000.txt");
-    else 
-    {
-        cout << "Tokio failo nėra" << endl;
-        return 0;
-    }
-    if(in.is_open())
-    {
-        studentai temp;
-        string temporary;
-        getline(in, temporary);
-
-        while (getline(in, temporary))
+        int nr_failas=1; //default reiksme
+        cin >> nr_failas;
+        ifstream in;
+        if (nr_failas==1) in.open("kursiokai.txt");
+        else if (nr_failas==2) in.open("studentai10000.txt");
+        else if (nr_failas==3) in.open("studentai100000.txt");
+        else if (nr_failas==4) in.open("studentai1000000.txt");
+        else 
         {
-            std::istringstream iss(temporary);
-                iss >> temp.vardas >> temp.pavarde;
+            cout << "Tokio failo nėra" << endl;
+            return 0;
+        }
+        if(in.is_open())
+        {
+            studentai temp;
+            
+            string temporary;
+            //getline(in, temporary);
+            n=0;
+            while (in.peek()!='\n')
+            {
+                in >> temporary;
+                n++;
+            }
+            n-=3;
+            //while (getline(in, temporary))
+            while (in >> temp.vardas >> temp.pavarde)
+            {
+                //std::istringstream iss(temporary);
+                //iss >> temp.vardas >> temp.pavarde;
+                
                 temp.suma = 0;
                 temp.pazymiai.clear();
                 for (int i = 0; i < n; i++)
                 {
-                    iss >> paz;
+                    //iss >> paz;
+                    in >> paz;
                     temp.suma += paz;
                     temp.pazymiai.push_back(paz);
                 }
-            iss >> temp.egzam;
-            temp.vidurkis=static_cast<double>(temp.suma)/n;
+                //iss >> temp.egzam;
+                in >> temp.egzam;
+                temp.vidurkis=static_cast<double>(temp.suma)/n;
 
-            mediana_skaiciavimas(temp.pazymiai, n, temp);
+                mediana_skaiciavimas(temp.pazymiai, n, temp);
 
-            //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
-            temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
-            temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
-            grupe.push_back(temp);
-            m++;
+                //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
+                temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+                temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+                grupe.push_back(temp);
+                m++;
+            }
+            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+            in.close();
+            auto pabaiga=std::chrono::high_resolution_clock::now();
+            auto trukme = std::chrono::duration_cast<std::chrono::seconds>(pabaiga-pradzia);
+            cout << "Programos vykdymo laikas: " << trukme.count() << "s" << endl;
+            /*
+            clock_t pabaiga=clock();
+            double trukme=double(pabaiga-pradzia)/CLOCKS_PER_SEC;
+            cout << "Programos vykdymo laikas: " << trukme << "s" << endl;
+            */
         }
-        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
-        in.close();
-        //auto pabaiga=std::chrono::high_resolution_clock::now();
-        //auto trukme = std::chrono::duration_cast<std::chrono::milliseconds>(pabaiga-pradzia);
-        //cout << "Programos vykdymo laikas: " << trukme.count() << "ms" << endl;
-        clock_t pabaiga=clock();
-        double trukme=double(pabaiga-pradzia)/CLOCKS_PER_SEC;
-        cout << "Programos vykdymo laikas: " << trukme << "s" << endl;
-    }
     
-    else 
-    {
-        cout << "Problema failo nuskaityme" << endl; 
-        return 0;
-    }
+        else 
+        {
+            cout << "Problema failo nuskaityme" << endl; 
+            return 0;
+        }
     }
     else if (nr_meniu==4)
     {
@@ -255,6 +267,6 @@ int main()
     }
         spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
     }
-
+    cout << endl << n << endl;
 
 }
