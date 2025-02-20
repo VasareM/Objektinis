@@ -16,7 +16,7 @@ int main()
     cin >> nr_spausdinimas;
     int m=0, n=0; //m-studentai, n-nd
     int paz, egz;
-    vector <studentai> grupe; //vektorius-objektas, mokantis dirbti su 5vairiaus duomenimis
+    vector <studentai> grupe;
     //grupes studentu pazymiai
 
     if (nr_meniu==5)
@@ -38,8 +38,7 @@ int main()
         }
         if(in.is_open())
         {
-            studentai temp;
-            
+            studentai temp;  
             string temporary;
             //getline(in, temporary);
             n=0;
@@ -49,28 +48,21 @@ int main()
                 n++;
             }
             n-=3;
-            //while (getline(in, temporary))
             while (in >> temp.vardas >> temp.pavarde)
             {
-                //std::istringstream iss(temporary);
-                //iss >> temp.vardas >> temp.pavarde;
-                
                 temp.suma = 0;
                 temp.pazymiai.clear();
                 for (int i = 0; i < n; i++)
                 {
-                    //iss >> paz;
                     in >> paz;
                     temp.suma += paz;
                     temp.pazymiai.push_back(paz);
                 }
-                //iss >> temp.egzam;
                 in >> temp.egzam;
                 temp.vidurkis=static_cast<double>(temp.suma)/n;
 
                 mediana_skaiciavimas(temp.pazymiai, n, temp);
 
-                //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
                 temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
                 temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
                 grupe.push_back(temp);
@@ -81,11 +73,6 @@ int main()
             auto pabaiga=std::chrono::high_resolution_clock::now();
             auto trukme = std::chrono::duration_cast<std::chrono::seconds>(pabaiga-pradzia);
             cout << "Programos vykdymo laikas: " << trukme.count() << "s" << endl;
-            /*
-            clock_t pabaiga=clock();
-            double trukme=double(pabaiga-pradzia)/CLOCKS_PER_SEC;
-            cout << "Programos vykdymo laikas: " << trukme << "s" << endl;
-            */
         }
     
         else 
@@ -152,7 +139,6 @@ int main()
             cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
             cin >> temp.egzam;
         }
-        //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
         temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
         temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
         grupe.push_back(temp);
@@ -197,14 +183,13 @@ int main()
         {
             paz=rand()%10+1;
             temp.suma+=paz;
-            temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
+            temp.pazymiai.push_back(paz);
         }
         temp.vidurkis=temp.suma/n;
         
         mediana_skaiciavimas(temp.pazymiai, n, temp);
 
         temp.egzam=rand()%10+1;
-        //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
         temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
         temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
         grupe.push_back(temp);
@@ -232,28 +217,19 @@ int main()
         temp.vardas=vardo_generavimas();
         temp.pavarde=pavardes_generavimas();
     ////////////////////////
-        /*
-        cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
-        cin >> n;
-        while (ar_beda(n, 1, 15))
-        {
-            cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
-            cin >> n;
-        }
-        */
+
         n=rand()%15+1;
         for (int y=0; y<n; y++)
         {
             paz=rand()%10+1;
             temp.suma+=paz;
-            temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
+            temp.pazymiai.push_back(paz);
         }
         temp.vidurkis=temp.suma/n;
         
         mediana_skaiciavimas(temp.pazymiai, n, temp);
 
         temp.egzam=rand()%10+1;
-        //temp.gal_vid=average(temp.pazymiai)*0.4+temp.egzam*0.6;
         temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
         temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
         grupe.push_back(temp);
