@@ -109,11 +109,16 @@ void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
         return;
     }
 }
-void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas)
+void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas, int n)
 {
-    rikiavimas(nr_rikiavimas, grupe);
-    if (nr_spausdinimas==1) spausdinimas(grupe);
-    else if (nr_spausdinimas==2) spausdinimas_faile(grupe);
+    if (n>0)
+    {
+        rikiavimas(nr_rikiavimas, grupe);
+        if (nr_spausdinimas==1) spausdinimas(grupe);
+        else if (nr_spausdinimas==2) spausdinimas_faile(grupe);
+        else cout << "Tokio spausdinimo būdo nėra" << endl;
+    }
+    else cout << "Nėra duomenų" << endl;
 }
 
 #endif // ANTRASTES_H

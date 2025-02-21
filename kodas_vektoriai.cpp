@@ -8,12 +8,32 @@ int main()
     cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo" << endl;
     int nr_meniu;
     cin >> nr_meniu;
+    while (ar_beda(nr_meniu, 1, 5))
+    {
+        cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
+        cin >> nr_meniu;
+    }
+    if (nr_meniu==4)
+    {
+        cout << "Darbas baigtas" << endl;
+        return 0;
+    }
     cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
     int nr_rikiavimas;
     cin >> nr_rikiavimas;
+    while (ar_beda(nr_rikiavimas, 1, 4))
+    {
+        cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
+        cin >> nr_rikiavimas;
+    }
     cout << "Kaip norėsite išvesti duomenis? \n 1 - į ekraną, 2 - į failą" << endl;
     int nr_spausdinimas;
     cin >> nr_spausdinimas;
+    while (ar_beda(nr_spausdinimas, 1, 2))
+    {
+        cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
+        cin >> nr_spausdinimas;
+    }
     int m=0, n=0; //m-studentai, n-nd
     int paz, egz;
     vector <studentai> grupe;
@@ -68,7 +88,7 @@ int main()
                 grupe.push_back(temp);
                 m++;
             }
-            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
             in.close();
             auto pabaiga=std::chrono::high_resolution_clock::now();
             auto trukme = std::chrono::duration_cast<std::chrono::seconds>(pabaiga-pradzia);
@@ -80,11 +100,6 @@ int main()
             cout << "Problema failo nuskaityme" << endl; 
             return 0;
         }
-    }
-    else if (nr_meniu==4)
-    {
-        cout << "Darbas baigtas" << endl;
-        return 0;
     }
 
     else if (nr_meniu==1)
@@ -150,7 +165,7 @@ int main()
             break;
         }
     }
-        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
     }
     else if (nr_meniu==2)
     {
@@ -201,7 +216,7 @@ int main()
             break;
         }
     }
-        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
     }
     else if (nr_meniu==3)
     {
@@ -241,7 +256,7 @@ int main()
             break;
         }
     }
-        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas);
+        spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
     }
     cout << endl << n << endl;
 
