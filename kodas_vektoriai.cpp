@@ -41,65 +41,29 @@ int main()
 
     if (nr_meniu==5)
     {
-        auto pradzia=std::chrono::high_resolution_clock::now(); 
-        //clock_t pradzia=clock();
         cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;
         int nr_failas=1; //default reiksme
         cin >> nr_failas;
-        ifstream in;
-        if (nr_failas==1) in.open("kursiokai.txt");
-        else if (nr_failas==2) in.open("studentai10000.txt");
-        else if (nr_failas==3) in.open("studentai100000.txt");
-        else if (nr_failas==4) in.open("studentai1000000.txt");
-        else 
-        {
+        string failo_pavadinimas;
+        if (nr_failas == 1) failo_pavadinimas = "kursiokai.txt";
+        else if (nr_failas == 2) failo_pavadinimas = "studentai10000.txt";
+        else if (nr_failas == 3) failo_pavadinimas = "studentai100000.txt";
+        else if (nr_failas == 4) failo_pavadinimas = "studentai1000000.txt";
+        else {
             cout << "Tokio failo nėra" << endl;
             return 0;
         }
-        if(in.is_open())
-        {
-            studentai temp;  
-            string temporary;
-            //getline(in, temporary);
-            n=0;
-            while (in.peek()!='\n')
-            {
-                in >> temporary;
-                n++;
-            }
-            n-=3;
-            while (in >> temp.vardas >> temp.pavarde)
-            {
-                temp.suma = 0;
-                temp.pazymiai.clear();
-                for (int i = 0; i < n; i++)
-                {
-                    in >> paz;
-                    temp.suma += paz;
-                    temp.pazymiai.push_back(paz);
-                }
-                in >> temp.egzam;
-                temp.vidurkis=static_cast<double>(temp.suma)/n;
-
-                mediana_skaiciavimas(temp.pazymiai, n, temp);
-
-                temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
-                temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
-                grupe.push_back(temp);
-                m++;
-            }
-            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
-            in.close();
-            auto pabaiga=std::chrono::high_resolution_clock::now();
-            auto trukme = std::chrono::duration_cast<std::chrono::seconds>(pabaiga-pradzia);
-            cout << "Programos vykdymo laikas: " << trukme.count() << "s" << endl;
-        }
-    
-        else 
-        {
-            cout << "Problema failo nuskaityme" << endl; 
-            return 0;
-        }
+        auto pradzia=std::chrono::high_resolution_clock::now();
+        auto pradzia_pilna=std::chrono::high_resolution_clock::now();
+        nuskaitymas(failo_pavadinimas, grupe, n);
+        auto pabaiga = std::chrono::high_resolution_clock::now();
+        auto trukme = std::chrono::duration_cast<std::chrono::seconds>(pabaiga - pradzia);
+        cout << "Nuskaitymo vykdymo laikas: " << trukme.count() << "s" << endl;
+        skaiciavimas(grupe, n);
+        spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas, grupe.size());
+        auto pabaiga_pilna = std::chrono::high_resolution_clock::now();
+        auto trukme_pilna = std::chrono::duration_cast<std::chrono::seconds>(pabaiga_pilna - pradzia_pilna);
+        cout << "Programos vykdymo laikas: " << trukme_pilna.count() << "s" << endl;
     }
 
     else if (nr_meniu==1)
@@ -145,7 +109,7 @@ int main()
         }
         temp.vidurkis=temp.suma/n;
         
-        mediana_skaiciavimas(temp.pazymiai, n, temp);
+        mediana_skaiciavimas(temp.pazymiai, temp);
 
         cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
         cin >> temp.egzam;
@@ -202,7 +166,7 @@ int main()
         }
         temp.vidurkis=temp.suma/n;
         
-        mediana_skaiciavimas(temp.pazymiai, n, temp);
+        mediana_skaiciavimas(temp.pazymiai, temp);
 
         temp.egzam=rand()%10+1;
         temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
@@ -242,7 +206,7 @@ int main()
         }
         temp.vidurkis=temp.suma/n;
         
-        mediana_skaiciavimas(temp.pazymiai, n, temp);
+        mediana_skaiciavimas(temp.pazymiai, temp);
 
         temp.egzam=rand()%10+1;
         temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
@@ -258,6 +222,6 @@ int main()
     }
         spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
     }
-    cout << endl << n << endl;
+    cout << endl << "Darbas baigtas" << endl;
 
 }

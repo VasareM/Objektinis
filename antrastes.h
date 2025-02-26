@@ -12,6 +12,8 @@
 #include <sstream>
 #include <chrono> //laiko skaiciavimui
 #include <ctime>
+#include <numeric> //accumulate
+#include <iterator> //istream_iterator
 
 using std::cin;
 using std::cout;
@@ -43,20 +45,22 @@ bool ar_beda(int x, int pr=0, int pb=10)
     }
     return false;
 }
-void mediana_skaiciavimas(vector <int> &pazymiai, int n, studentai &temp)
+int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp)
 {
+    int n=temp.pazymiai.size(), med=0;
     sort(temp.pazymiai.begin(), temp.pazymiai.end());
         {
             if (n%2==0)
             {
-                temp.mediana=((temp.pazymiai[n/2-1]+temp.pazymiai[n/2]))/2;
+                med=((temp.pazymiai[n/2-1]+temp.pazymiai[n/2]))/2;
             }
             else 
             {
-                temp.mediana=temp.pazymiai[n/2];
+                med=temp.pazymiai[n/2];
             }
         }
         //temp.mediana=median(temp.pazymiai);
+        return med;
 }
 string vardo_generavimas()
 {
@@ -119,6 +123,72 @@ void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int n
         else cout << "Tokio spausdinimo būdo nėra" << endl;
     }
     else cout << "Nėra duomenų" << endl;
+}
+
+int sumos_skaiciavimas(vector <int> &pazymiai, studentai &temp)
+{
+    int suma=0;
+    suma=std::accumulate(temp.pazymiai.begin(), temp.pazymiai.end(), 0);
+    return suma;
+}
+double vidurkio_skaiciavimas(vector <int> &pazymiai, studentai &temp)
+{
+    double vidurkis=0;
+    vidurkis=sumos_skaiciavimas(pazymiai, temp)/(double)temp.pazymiai.size();
+    return vidurkis;
+}
+double galutinis_vid_sk(studentai &temp, double &vidurkis)
+{
+    double gal_v=0;
+    gal_v=0.4*temp.vidurkis+0.6*temp.egzam;
+    return gal_v;
+}
+double galutinis_med_sk(studentai &temp, int &mediana)
+{
+    double gal_v=0;
+    gal_v=0.4*temp.mediana+0.6*temp.egzam;
+    return gal_v;
+}
+
+void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) {
+    std::ios::sync_with_stdio(false); // Optimize input speed
+    ifstream in(failo_pavadinimas);
+    if (!in.is_open()) {
+        cout << "Problema failo nuskaityme" << endl;
+        return;
+    }
+    string eilute;
+    //string laikina;
+    //getline(in, eilute); // Skip the header line
+    n=-3; // 3 - vardas, pavarde, egzamino pazymys
+    if (getline(in, eilute)) {
+        std::istringstream ss(eilute);
+        n = std::distance(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>()) - 3;
+    }
+
+    while (getline(in, eilute)) {
+        std::istringstream iss(eilute);
+        studentai temp;
+        iss >> temp.vardas >> temp.pavarde;
+
+        // Read grades efficiently
+        temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
+        temp.egzam = temp.pazymiai.back(); // Last element is the exam grade
+        temp.pazymiai.pop_back(); // Remove it from the vector
+        grupe.push_back(std::move(temp)); // Move to optimize vector insertion
+    }
+    in.close();
+}
+void skaiciavimas(vector <studentai> &grupe, int n)
+{
+    for (auto& m:grupe)
+    {
+        m.suma=sumos_skaiciavimas(m.pazymiai, m);
+        m.vidurkis=vidurkio_skaiciavimas(m.pazymiai, m);
+        m.mediana=mediana_skaiciavimas(m.pazymiai, m);
+        m.gal_vid=galutinis_vid_sk(m, m.vidurkis);
+        m.gal_med=galutinis_med_sk(m, m.mediana);
+    }
 }
 
 #endif // ANTRASTES_H
