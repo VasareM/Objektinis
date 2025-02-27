@@ -10,7 +10,6 @@
 #include <algorithm> // kad veiktu sort
 #include <ctime> //rand
 #include <random>
-
 #include <fstream>
 #include <sstream>
 #include <chrono> //laiko skaiciavimui
@@ -19,32 +18,27 @@
 #include <iterator> //istream_iterator
 
 using std::vector;
+using std::string;
+
+bool ar_beda(int x, int pr, int pb);
+int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp);
+string vardo_generavimas();
+string pavardes_generavimas();
+
+void spausdinimas(vector<studentai> grupe);
+void spausdinimas_faile(vector<studentai> grupe);
+
+void rikiavimas(int nr_rikiavimas, vector<studentai> &grupe);
+void spausdinimo_parinkimas(vector<studentai> grupe, int nr_spausdinimas, int nr_rikiavimas);
 
 
-int sumos_skaiciavimas(vector <int> &pazymiai, studentai &temp)
-{
-    int suma=0;
-    suma=std::accumulate(temp.pazymiai.begin(), temp.pazymiai.end(), 0);
-    return suma;
-}
-double vidurkio_skaiciavimas(vector <int> &pazymiai, studentai &temp)
-{
-    double vidurkis=0;
-    vidurkis=sumos_skaiciavimas(pazymiai, temp)/(double)temp.pazymiai.size();
-    return vidurkis;
-}
-double galutinis_vid_sk(studentai &temp, double &vidurkis)
-{
-    double gal_v=0;
-    gal_v=0.4*temp.vidurkis+0.6*temp.egzam;
-    return gal_v;
-}
-double galutinis_med_sk(studentai &temp, int &mediana)
-{
-    double gal_v=0;
-    gal_v=0.4*temp.mediana+0.6*temp.egzam;
-    return gal_v;
-}
+int sumos_skaiciavimas(vector <int> &pazymiai, studentai &temp);
+double vidurkio_skaiciavimas(vector <int> &pazymiai, studentai &temp);
+double galutinis_vid_sk(studentai &temp, double &vidurkis);
+double galutinis_med_sk(studentai &temp, int &mediana);
 
+
+void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n);
+void skaiciavimas(vector<studentai>& grupe, int n);
 
 #endif // ANTRASTES_H

@@ -1,7 +1,12 @@
 #include "antrastes.h"
-
-#include "antrastes.h"
 #include "strukt_antr.h"
+
+using std::cout;
+using std::cin;
+using std::endl;
+using std::vector;
+using std::string;
+using std::setw;
 
 int main()
 {
@@ -63,7 +68,7 @@ int main()
             auto trukme = std::chrono::duration_cast<std::chrono::seconds>(pabaiga - pradzia);
             cout << "Nuskaitymo vykdymo laikas: " << trukme.count() << "s" << endl;
             skaiciavimas(grupe, n);
-            spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas, grupe.size());
+            spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
             auto pabaiga_pilna = std::chrono::high_resolution_clock::now();
             auto trukme_pilna = std::chrono::duration_cast<std::chrono::seconds>(pabaiga_pilna - pradzia_pilna);
             cout << "Programos vykdymo laikas: " << trukme_pilna.count() << "s" << endl;
@@ -102,7 +107,7 @@ int main()
             for (int y=0; y<n; y++)
             {
                 cin >> paz;
-                while (ar_beda(paz))
+                while (ar_beda(paz, 0, 10))
                 {
                     cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
                     cin >> paz;
@@ -112,11 +117,11 @@ int main()
             }
             temp.vidurkis=temp.suma/n;
             
-            mediana_skaiciavimas(temp.pazymiai, temp);
+            temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
 
             cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
             cin >> temp.egzam;
-            while (ar_beda(temp.egzam))
+            while (ar_beda(temp.egzam, 0, 10))
             {
                 cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
                 cin >> temp.egzam;
@@ -132,7 +137,7 @@ int main()
                 break;
             }
         }
-            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
+            spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
         }
         else if (nr_meniu==2)
         {
@@ -169,7 +174,7 @@ int main()
             }
             temp.vidurkis=temp.suma/n;
             
-            mediana_skaiciavimas(temp.pazymiai, temp);
+            temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
 
             temp.egzam=rand()%10+1;
             temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
@@ -183,7 +188,7 @@ int main()
                 break;
             }
         }
-            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
+            spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
         }
         else if (nr_meniu==3)
         {
@@ -209,7 +214,7 @@ int main()
             }
             temp.vidurkis=temp.suma/n;
             
-            mediana_skaiciavimas(temp.pazymiai, temp);
+            temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
 
             temp.egzam=rand()%10+1;
             temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
@@ -223,7 +228,7 @@ int main()
                 break;
             }
         }
-            spausdinimo_parinkimas(grupe,nr_spausdinimas,nr_rikiavimas, n);
+            spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
         }
         cout << endl << "Darbas baigtas" << endl;
     } 

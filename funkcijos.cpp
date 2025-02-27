@@ -28,7 +28,7 @@ using std::ofstream;
 using std::sort;
 
 
-bool ar_beda(int x, int pr=0, int pb=10)
+bool ar_beda(int x, int pr, int pb)
 {
     if (x<pr || x>pb)
     {
@@ -40,19 +40,17 @@ bool ar_beda(int x, int pr=0, int pb=10)
 int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp)
 {
     int n=temp.pazymiai.size(), med=0;
-    sort(temp.pazymiai.begin(), temp.pazymiai.end());
-        {
-            if (n%2==0)
-            {
-                med=((temp.pazymiai[n/2-1]+temp.pazymiai[n/2]))/2;
-            }
-            else 
-            {
-                med=temp.pazymiai[n/2];
-            }
-        }
-        //temp.mediana=median(temp.pazymiai);
-        return med;
+    std::sort(temp.pazymiai.begin(), temp.pazymiai.end());
+    if (n%2==0)
+    {
+        med=((temp.pazymiai[n/2-1]+temp.pazymiai[n/2]))/2;
+    }
+    else 
+    {
+        med=temp.pazymiai[n/2];
+    }
+    temp.mediana = med;
+    return med;
 }
 string vardo_generavimas()
 {
@@ -74,7 +72,7 @@ void spausdinimas(vector <studentai> grupe)
     {
         cout << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
         cout << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
-        //for(const auto&n:m.pazymiai) cout << n << " ";
+        //for(const auto&n:m.pazymiai) cout << " " ;
         //cout << endl;
     }
 }
@@ -87,8 +85,7 @@ void spausdinimas_faile(vector <studentai> grupe)
     {
         out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
         out << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
-        //for(const auto&n:m.pazymiai) cout << n << " ";
-        //cout << endl;
+        //for(const auto&n:m.pazymiai) cout << n << " "               //cout << endl;
     }
 }
 void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
@@ -103,9 +100,9 @@ void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
         return;
     }
 }
-void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int nr_rikiavimas, int n)
+void spausdinimo_parinkimas(std::vector<studentai> grupe, int nr_spausdinimas, int nr_rikiavimas)
 {
-    if (n>0)
+    if (!grupe.empty())
     {
         rikiavimas(nr_rikiavimas, grupe);
         if (nr_spausdinimas==1) spausdinimas(grupe);
@@ -114,7 +111,32 @@ void spausdinimo_parinkimas(vector <studentai> grupe, int nr_spausdinimas, int n
     }
     else cout << "Nėra duomenų" << endl;
 }
-void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) {
+int sumos_skaiciavimas(vector <int> &pazymiai, studentai &temp)
+{
+    int suma=0;
+    suma=std::accumulate(temp.pazymiai.begin(), temp.pazymiai.end(), 0);
+    return suma;
+}
+double vidurkio_skaiciavimas(vector <int> &pazymiai, studentai &temp)
+{
+    double vidurkis=0;
+    vidurkis=sumos_skaiciavimas(pazymiai, temp)/(double)temp.pazymiai.size();
+    return vidurkis;
+}
+double galutinis_vid_sk(studentai &temp, double &vidurkis)
+{
+    double gal_v=0;
+    gal_v=0.4*temp.vidurkis+0.6*temp.egzam;
+    return gal_v;
+}
+double galutinis_med_sk(studentai &temp, int &mediana)
+{
+    double gal_v=0;
+    gal_v=0.4*temp.mediana+0.6*temp.egzam;
+    return gal_v;
+}
+void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) 
+{
     std::ios::sync_with_stdio(false); // Optimize input speed
     ifstream in(failo_pavadinimas);
     if (!in.is_open()) {
@@ -122,7 +144,7 @@ void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int 
         return;
     }
     string eilute;
-    //string laikina;
+//string laikina;
     //getline(in, eilute); // Skip the header line
     n=-3; // 3 - vardas, pavarde, egzamino pazymys
     if (getline(in, eilute)) {
@@ -137,9 +159,9 @@ void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int 
 
         // Read grades efficiently
         temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
-        temp.egzam = temp.pazymiai.back(); // Last element is the exam grade
-        temp.pazymiai.pop_back(); // Remove it from the vector
-        grupe.push_back(std::move(temp)); // Move to optimize vector insertion
+        temp.egzam = temp.pazymiai.back();
+        temp.pazymiai.pop_back(); // Remove from the vector
+        grupe.push_back(std::move(temp)); // to optimize vector insertion
     }
     in.close();
 }
