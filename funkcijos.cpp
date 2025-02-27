@@ -27,6 +27,23 @@ using std::ifstream;
 using std::ofstream;
 using std::sort;
 
+void vartotojo_pasirinkimas(int nr_meniu, int a, int b)
+{
+    while (true) 
+        {
+            try 
+            {
+                if (!ar_beda_bendras(nr_meniu, a, b)) break;
+            } 
+            catch (const std::out_of_range& e) 
+            {
+                cout << e.what() << endl;
+                cin.clear(); // Clear the error flag
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the rest of the input
+                cin >> nr_meniu;
+            }
+        }
+}
 bool ar_beda(int x, int pr, int pb)
 {
     if (x<pr || x>pb)

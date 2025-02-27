@@ -19,20 +19,9 @@ int main()
         cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo" << endl;
         int nr_meniu;
         cin >> nr_meniu;
-        while (true) 
-        {
-            try 
-            {
-                if (!ar_beda_bendras(nr_meniu, 1, 5)) break;
-            } 
-            catch (const std::out_of_range& e) 
-            {
-                cout << e.what() << endl;
-                cin.clear(); // Clear the error flag
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the rest of the input
-                cin >> nr_meniu;
-            }
-        }
+
+        vartotojo_pasirinkimas(nr_meniu, 1, 5);
+
         if (nr_meniu==4)
         {
             cout << "Darbas baigtas" << endl;
@@ -41,11 +30,14 @@ int main()
         cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
         int nr_rikiavimas;
         cin >> nr_rikiavimas;
+        vartotojo_pasirinkimas(nr_rikiavimas, 1, 4);
+        /*
         while (ar_beda(nr_rikiavimas, 1, 4))
         {
             cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
             cin >> nr_rikiavimas;
         }
+        */
         cout << "Kaip norėsite išvesti duomenis? \n 1 - į ekraną, 2 - į failą" << endl;
         int nr_spausdinimas;
         cin >> nr_spausdinimas;
