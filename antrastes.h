@@ -21,12 +21,6 @@
 using std::vector;
 
 
-
-
-
-
-
-///
 int sumos_skaiciavimas(vector <int> &pazymiai, studentai &temp)
 {
     int suma=0;
@@ -51,7 +45,6 @@ double galutinis_med_sk(studentai &temp, int &mediana)
     gal_v=0.4*temp.mediana+0.6*temp.egzam;
     return gal_v;
 }
-///
 
 
 #endif // ANTRASTES_H

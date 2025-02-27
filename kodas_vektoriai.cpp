@@ -1,5 +1,7 @@
 #include "antrastes.h"
 
+#include "antrastes.h"
+#include "strukt_antr.h"
 
 int main()
 {

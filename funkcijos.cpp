@@ -1,4 +1,4 @@
-#include "strukt_antr.h"
+#include "antrastes.h"
 
 #include <iostream>
 #include <iomanip>
