@@ -27,7 +27,6 @@ using std::ifstream;
 using std::ofstream;
 using std::sort;
 
-
 bool ar_beda(int x, int pr, int pb)
 {
     if (x<pr || x>pb)
@@ -138,9 +137,14 @@ double galutinis_med_sk(studentai &temp, int &mediana)
 void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) 
 {
     std::ios::sync_with_stdio(false); // Optimize input speed
-    ifstream in(failo_pavadinimas);
-    if (!in.is_open()) {
-        cout << "Problema failo nuskaityme" << endl;
+    ifstream in;
+    try {
+        in.open(failo_pavadinimas);
+        if (!in.is_open()) {
+            throw std::runtime_error("Problema failo nuskaityme");
+        }
+    } catch (const std::exception& e) {
+        cout << e.what() << endl;
         return;
     }
     string eilute;
