@@ -36,6 +36,14 @@ bool ar_beda(int x, int pr, int pb)
     }
     return false;
 }
+bool ar_beda_bendras(int x, int pr, int pb)
+{
+    if (x<pr || x>pb)
+    {
+        throw std::out_of_range("Neteisinga įvestis");
+    }
+    return false;
+}
 int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp)
 {
     int n=temp.pazymiai.size(), med=0;

@@ -9,7 +9,7 @@ using std::string;
 
 struct studentai
 {
-    string vardas="var"; //defalt reiksmes testavimui
+    string vardas="var"; //default reiksmes testavimui
     string pavarde="pav";
     vector<int> pazymiai; //nd tarpiniai rezultatai
     int egzam;

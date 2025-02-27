@@ -21,6 +21,7 @@ using std::vector;
 using std::string;
 
 bool ar_beda(int x, int pr, int pb);
+bool ar_beda_bendras(int x, int pr, int pb);
 int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp);
 string vardo_generavimas();
 string pavardes_generavimas();

@@ -1,6 +1,9 @@
 #include "antrastes.h"
 #include "strukt_antr.h"
 
+#include <exception>
+#include <limits>
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -16,10 +19,19 @@ int main()
         cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo" << endl;
         int nr_meniu;
         cin >> nr_meniu;
-        while (ar_beda(nr_meniu, 1, 5))
+        while (true) 
         {
-            cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
-            cin >> nr_meniu;
+            try 
+            {
+                if (!ar_beda_bendras(nr_meniu, 1, 5)) break;
+            } 
+            catch (const std::out_of_range& e) 
+            {
+                cout << e.what() << endl;
+                cin.clear(); // Clear the error flag
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the rest of the input
+                cin >> nr_meniu;
+            }
         }
         if (nr_meniu==4)
         {
