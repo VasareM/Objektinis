@@ -92,67 +92,67 @@ int main()
                 cout << "Darbas baigtas" << endl;
                 return 0;
             }
-        while (ats=='T')
-        {
-            studentai temp;
-            cout << "Įveskite studento vardą ir pavardę" << endl;
-            cin >> temp.vardas >> temp.pavarde;
-            while (temp.vardas.size()>19 || temp.pavarde.size()>19)
+            while (ats=='T')
             {
-                cout << "Vardas arba pavardė per ilgi" << endl;
+                studentai temp;
                 cout << "Įveskite studento vardą ir pavardę" << endl;
                 cin >> temp.vardas >> temp.pavarde;
-            }
-            cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
-            cin >> n;
-            vartotojo_pasirinkimas(n, 1, 15);
-            /*
-            while (ar_beda(n, 1, 15))
-            {
+                while (temp.vardas.size()>19 || temp.pavarde.size()>19)
+                {
+                    cout << "Vardas arba pavardė per ilgi" << endl;
+                    cout << "Įveskite studento vardą ir pavardę" << endl;
+                    cin >> temp.vardas >> temp.pavarde;
+                }
                 cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
                 cin >> n;
-            }
-                */
-            cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
-            for (int y=0; y<n; y++)
-            {
-                cin >> paz;
-                vartotojo_pasirinkimas(paz, 0, 10);
+                vartotojo_pasirinkimas(n, 1, 15);
                 /*
-                while (ar_beda(paz, 0, 10))
+                while (ar_beda(n, 1, 15))
                 {
-                    cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
-                    cin >> paz;
+                    cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+                    cin >> n;
                 }
                     */
-                temp.suma+=paz;
-                temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
-            }
-            temp.vidurkis=temp.suma/n;
-            
-            temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
+                cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
+                for (int y=0; y<n; y++)
+                {
+                    cin >> paz;
+                    vartotojo_pasirinkimas(paz, 0, 10);
+                    /*
+                    while (ar_beda(paz, 0, 10))
+                    {
+                        cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
+                        cin >> paz;
+                    }
+                        */
+                    temp.suma+=paz;
+                    temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
+                }
+                temp.vidurkis=temp.suma/n;
+                
+                temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
 
-            cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
-            cin >> temp.egzam;
-            vartotojo_pasirinkimas(temp.egzam, 0, 10);
-            /*
-            while (ar_beda(temp.egzam, 0, 10))
-            {
                 cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
                 cin >> temp.egzam;
+                vartotojo_pasirinkimas(temp.egzam, 0, 10);
+                /*
+                while (ar_beda(temp.egzam, 0, 10))
+                {
+                    cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
+                    cin >> temp.egzam;
+                }
+                    */
+                temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+                temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+                grupe.push_back(temp);
+                m++;
+                cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+                cin >> ats;
+                if (ats=='n')
+                {
+                    break;
+                }
             }
-                */
-            temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
-            temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
-            grupe.push_back(temp);
-            m++;
-            cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
-            cin >> ats;
-            if (ats=='n')
-            {
-                break;
-            }
-        }
             spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
         }
         else if (nr_meniu==2)
@@ -212,38 +212,38 @@ int main()
             char ats;
             m=0;
             cin >> ats;
-        while (ats=='T')
-        {
-            studentai temp;
-
-        ////////////////////////
-            temp.vardas=vardo_generavimas();
-            temp.pavarde=pavardes_generavimas();
-        ////////////////////////
-
-            n=rand()%15+1;
-            for (int y=0; y<n; y++)
+            while (ats=='T')
             {
-                paz=rand()%10+1;
-                temp.suma+=paz;
-                temp.pazymiai.push_back(paz);
-            }
-            temp.vidurkis=temp.suma/n;
-            
-            temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
+                studentai temp;
 
-            temp.egzam=rand()%10+1;
-            temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
-            temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
-            grupe.push_back(temp);
-            m++;
-            cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
-            cin >> ats;
-            if (ats=='n')
-            {
-                break;
+            ////////////////////////
+                temp.vardas=vardo_generavimas();
+                temp.pavarde=pavardes_generavimas();
+            ////////////////////////
+
+                n=rand()%15+1;
+                for (int y=0; y<n; y++)
+                {
+                    paz=rand()%10+1;
+                    temp.suma+=paz;
+                    temp.pazymiai.push_back(paz);
+                }
+                temp.vidurkis=temp.suma/n;
+                
+                temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
+
+                temp.egzam=rand()%10+1;
+                temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+                temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+                grupe.push_back(temp);
+                m++;
+                cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+                cin >> ats;
+                if (ats=='n')
+                {
+                    break;
+                }
             }
-        }
             spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
         }
         cout << endl << "Darbas baigtas" << endl;
