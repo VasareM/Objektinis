@@ -41,11 +41,14 @@ int main()
         cout << "Kaip norėsite išvesti duomenis? \n 1 - į ekraną, 2 - į failą" << endl;
         int nr_spausdinimas;
         cin >> nr_spausdinimas;
+        vartotojo_pasirinkimas(nr_spausdinimas, 1, 2);
+        /*
         while (ar_beda(nr_spausdinimas, 1, 2))
         {
             cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
             cin >> nr_spausdinimas;
         }
+            */  
         int m=0, n=0; //m-studentai, n-nd
         int paz, egz;
         vector <studentai> grupe;

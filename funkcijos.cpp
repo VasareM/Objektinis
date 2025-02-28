@@ -27,7 +27,7 @@ using std::ifstream;
 using std::ofstream;
 using std::sort;
 
-void vartotojo_pasirinkimas(int nr_meniu, int a, int b)
+void vartotojo_pasirinkimas(int &nr_meniu, int a, int b)
 {
     while (true) 
         {
