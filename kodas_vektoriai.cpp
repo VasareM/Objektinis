@@ -105,20 +105,26 @@ int main()
             }
             cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
             cin >> n;
+            vartotojo_pasirinkimas(n, 1, 15);
+            /*
             while (ar_beda(n, 1, 15))
             {
                 cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
                 cin >> n;
             }
+                */
             cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
             for (int y=0; y<n; y++)
             {
                 cin >> paz;
+                vartotojo_pasirinkimas(paz, 0, 10);
+                /*
                 while (ar_beda(paz, 0, 10))
                 {
                     cout << "Įveskite studento namų darbų pažymius (nuo 0 iki 10)" << endl;
                     cin >> paz;
                 }
+                    */
                 temp.suma+=paz;
                 temp.pazymiai.push_back(paz); //prideda paz elementa i vektoriaus pazymiai gala
             }
@@ -128,11 +134,14 @@ int main()
 
             cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
             cin >> temp.egzam;
+            vartotojo_pasirinkimas(temp.egzam, 0, 10);
+            /*
             while (ar_beda(temp.egzam, 0, 10))
             {
                 cout << "Įveskite studento egzamino rezultatą (nuo 0 iki 10)" << endl;
                 cin >> temp.egzam;
             }
+                */
             temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
             temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
             grupe.push_back(temp);
