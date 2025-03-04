@@ -38,17 +38,24 @@ int main()
         if (nr_meniu==6)
         {
             cout << "Kokio dydžio failą generuosime? (įveskite eilučių kiekį)" << endl;
-            int nr_failo_dydis;
-            auto kurimo_pradzia=std::chrono::high_resolution_clock::now();
-            cin >> nr_failo_dydis;
-            string failo_pavadinimas;
-            //int paz_kiekis=rand()%15+1; //galimas, bet visus failus bus vienodas
-            int paz_kiekis=7;
-            failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
-            failo_generavimas(failo_pavadinimas, nr_failo_dydis, paz_kiekis);
-            auto kurimo_pabaiga = std::chrono::high_resolution_clock::now();
-            auto kurimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(kurimo_pabaiga - kurimo_pradzia);
-            cout << "Failo kūrimo laikas: " << kurimo_trukme.count() << "s" << endl;
+            int failu_dydziai[5];
+            for (int i=0; i<5; i++) {
+                cin >> failu_dydziai[i];
+            }
+            for (int i=0; i<5; i++) {
+                int nr_failo_dydis=failu_dydziai[i];
+                auto kurimo_pradzia=std::chrono::high_resolution_clock::now();
+                //cin >> nr_failo_dydis;
+                string failo_pavadinimas;
+                //int paz_kiekis=rand()%15+1; //galimas, bet visus failus bus vienodas
+                int paz_kiekis=7;
+                failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
+                failo_generavimas(failo_pavadinimas, nr_failo_dydis, paz_kiekis);
+                auto kurimo_pabaiga = std::chrono::high_resolution_clock::now();
+                auto kurimo_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(kurimo_pabaiga - kurimo_pradzia);
+                cout << "Failo " << failo_pavadinimas << " kūrimo laikas: " << std::fixed << std::setprecision(4) << kurimo_trukme.count() << "s" << endl;
+                
+            }
             return 0;
         }
         if (nr_meniu==7)
