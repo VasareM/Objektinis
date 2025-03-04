@@ -60,6 +60,31 @@ int main()
         }
         if (nr_meniu==7)
         {
+            int failu_dydziai[5]={1000, 10000, 100000, 1000000, 10000000};
+            for (int i=0; i<5; i++)
+            {
+                nr_failo_dydis=failu_dydziai[i];
+                failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
+                auto failo_darbo_pradzia=std::chrono::high_resolution_clock::now();
+
+
+                auto failo_darbo_pabaiga = std::chrono::high_resolution_clock::now();
+                auto failo_darbo_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo_darbo_pabaiga - failo_darbo_pradzia);
+
+                cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas, panaikinant pradinį Vektor: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                cout << nr_failo_dydis << " įrašų nelaimingų įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                cout << nr_failo_dydis << " įrašų galvočių įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+            
+
+
+                cout << endl;
+                auto pilna_pabaiga = std::chrono::high_resolution_clock::now();
+                auto pilna_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(pilna_pabaiga - failo_darbo_pradzia);
+                cout << nr_failo_dydis << " įrašų testo laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+            
+            }
             return 0;
         }
         cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
