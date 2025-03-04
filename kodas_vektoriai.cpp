@@ -27,28 +27,7 @@ int rand_pazymys()
     pazymys=rand()%10+1;
     return pazymys;
 }
-/*
-vector<string> sabloniniai_vardai(int count)
-{
-    vector<string> names;
-    for (int i = 1; i <= count; ++i) {
-        ostringstream name;
-        name << "VardasNR" << i;
-        names.push_back(name.str());
-    }
-    return names;
-}
-vector<string> sabloniniai_pavardai(int count)
-{
-    vector<string> names;
-    for (int i = 1; i <= count; ++i) {
-        ostringstream name;
-        name << "PavardeNR" << i;
-        names.push_back(name.str());
-    }
-    return names;
-}
-    */
+
 void failo_generavimas(string failo_pavadinimas, int nr_failo_dydis, int paz_kiekis)
 {
     std::ofstream out(failo_pavadinimas);
@@ -91,7 +70,8 @@ int main()
             int nr_failo_dydis;
             cin >> nr_failo_dydis;
             string failo_pavadinimas;
-            int paz_kiekis=rand()%15+1;
+            //int paz_kiekis=rand()%15+1; //galimas, bet visus failus bus vienodas
+            int paz_kiekis=7;
             failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
             failo_generavimas(failo_pavadinimas, nr_failo_dydis, paz_kiekis);
             return 0;

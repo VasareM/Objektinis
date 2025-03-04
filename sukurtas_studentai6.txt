@@ -1,7 +1,0 @@
-              Vardas             Pavarde        ND1        ND2        ND3        ND4        ND5      Egz.
-           VardasNR1          PavardeNR1         9         8         2         8         3         1
-           VardasNR2          PavardeNR2         9         3         6         5         8         5
-           VardasNR3          PavardeNR3         6         1         1         6         8         8
-           VardasNR4          PavardeNR4         4         3        10        10         1         9
-           VardasNR5          PavardeNR5        10         2         6         4         9         7
-           VardasNR6          PavardeNR6         6        10         7         6        10         3
