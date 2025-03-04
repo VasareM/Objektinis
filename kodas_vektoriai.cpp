@@ -3,6 +3,16 @@
 
 #include <exception>
 #include <limits>
+// vėliau ištrint:
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
 
 using std::cout;
 using std::cin;
@@ -10,6 +20,54 @@ using std::endl;
 using std::vector;
 using std::string;
 using std::setw;
+
+int rand_pazymys()
+{
+    int pazymys;
+    pazymys=rand()%10+1;
+    return pazymys;
+}
+/*
+vector<string> sabloniniai_vardai(int count)
+{
+    vector<string> names;
+    for (int i = 1; i <= count; ++i) {
+        ostringstream name;
+        name << "VardasNR" << i;
+        names.push_back(name.str());
+    }
+    return names;
+}
+vector<string> sabloniniai_pavardai(int count)
+{
+    vector<string> names;
+    for (int i = 1; i <= count; ++i) {
+        ostringstream name;
+        name << "PavardeNR" << i;
+        names.push_back(name.str());
+    }
+    return names;
+}
+    */
+void failo_generavimas(string failo_pavadinimas, int nr_failo_dydis, int paz_kiekis)
+{
+    std::ofstream out(failo_pavadinimas);
+    out << "Vardas" << std::setw(20) << "Pavarde";
+    for( int i=1; i<=paz_kiekis; i++)
+    {
+        out << std::setw(10) << "ND" << i;
+    }
+    out << std::setw(10) << "Egz." << std::endl;
+    for (int i=0; i<nr_failo_dydis; i++)
+    {
+        out << "VardasNR" << i+1 << std::setw(20) << "PavardeNR" << i+1;
+        for (int j=0; j<paz_kiekis; j++)
+        {
+            out << std::setw(10) << rand_pazymys();
+        }
+        out << std::setw(10) << rand_pazymys() << std::endl;
+    }
+}
 
 int main()
 {
@@ -20,11 +78,22 @@ int main()
         int nr_meniu;
         cin >> nr_meniu;
 
-        vartotojo_pasirinkimas(nr_meniu, 1, 5);
+        vartotojo_pasirinkimas(nr_meniu, 1, 6);
 
         if (nr_meniu==4)
         {
             cout << "Darbas baigtas" << endl;
+            return 0;
+        }
+        if (nr_meniu==6)
+        {
+            cout << "Kokio dydžio failą generuosime? (įveskite eilučių kiekį)" << endl;
+            int nr_failo_dydis;
+            cin >> nr_failo_dydis;
+            string failo_pavadinimas;
+            int paz_kiekis=rand()%15+1;
+            failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
+            failo_generavimas(failo_pavadinimas, nr_failo_dydis, paz_kiekis);
             return 0;
         }
         cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
@@ -161,49 +230,49 @@ int main()
             char ats;
             m=0;
             cin >> ats;
-        while (ats=='T')
-        {
-            studentai temp;
-            cout << "Įveskite studento vardą ir pavardę" << endl;
-            cin >> temp.vardas >> temp.pavarde;
-            while (temp.vardas.size()>19 || temp.pavarde.size()>19)
+            while (ats=='T')
             {
-                cout << "Vardas arba pavardė per ilgi" << endl;
+                studentai temp;
                 cout << "Įveskite studento vardą ir pavardę" << endl;
                 cin >> temp.vardas >> temp.pavarde;
-            }
-            /*
-            cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
-            cin >> n;
-            while (ar_beda(n, 1, 15))
-            {
+                while (temp.vardas.size()>19 || temp.pavarde.size()>19)
+                {
+                    cout << "Vardas arba pavardė per ilgi" << endl;
+                    cout << "Įveskite studento vardą ir pavardę" << endl;
+                    cin >> temp.vardas >> temp.pavarde;
+                }
+                /*
                 cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
                 cin >> n;
-            }
-            */
-            n=rand()%15+1;
-            for (int y=0; y<n; y++)
-            {
-                paz=rand()%10+1;
-                temp.suma+=paz;
-                temp.pazymiai.push_back(paz);
-            }
-            temp.vidurkis=temp.suma/n;
-            
-            temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
+                while (ar_beda(n, 1, 15))
+                {
+                    cout << "Įveskite studento namų darbų kiekį (nuo 1 iki 15)" << endl;
+                    cin >> n;
+                }
+                */
+                n=rand()%15+1;
+                for (int y=0; y<n; y++)
+                {
+                    paz=rand_pazymys();
+                    temp.suma+=paz;
+                    temp.pazymiai.push_back(paz);
+                }
+                temp.vidurkis=temp.suma/n;
+                
+                temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
 
-            temp.egzam=rand()%10+1;
-            temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
-            temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
-            grupe.push_back(temp);
-            m++;
-            cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
-            cin >> ats;
-            if (ats=='n')
-            {
-                break;
+                temp.egzam=rand_pazymys();
+                temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
+                temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
+                grupe.push_back(temp);
+                m++;
+                cout << "Ar norite įvesti naujo studento duomenis? (T/n)" << endl;
+                cin >> ats;
+                if (ats=='n')
+                {
+                    break;
+                }
             }
-        }
             spausdinimo_parinkimas(grupe, nr_spausdinimas, nr_rikiavimas);
         }
         else if (nr_meniu==3)
@@ -224,7 +293,7 @@ int main()
                 n=rand()%15+1;
                 for (int y=0; y<n; y++)
                 {
-                    paz=rand()%10+1;
+                    paz=rand_pazymys();
                     temp.suma+=paz;
                     temp.pazymiai.push_back(paz);
                 }
@@ -232,7 +301,7 @@ int main()
                 
                 temp.mediana=mediana_skaiciavimas(temp.pazymiai, temp);
 
-                temp.egzam=rand()%10+1;
+                temp.egzam=rand_pazymys();
                 temp.gal_vid=0.4*temp.vidurkis+0.6*temp.egzam;
                 temp.gal_med=0.4*temp.mediana+0.6*temp.egzam;
                 grupe.push_back(temp);

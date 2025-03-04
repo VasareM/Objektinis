@@ -1,0 +1,13 @@
+Vardas              Pavarde             ND        1ND        2ND        3ND        4ND        5ND        6ND        7ND        8ND        9ND        10Egz.      
+VardasNR            1PavardeNR           11         4         1         8         3         6         5         2         3         2         4         
+VardasNR            2PavardeNR           23         9         2         7         7         1         6         10        4         1         2         
+VardasNR            3PavardeNR           36         5         3         8         7         1         1         2         9         10        5         
+VardasNR            4PavardeNR           43         10        4         10        6         7         8         4         1         6         2         
+VardasNR            5PavardeNR           53         5         2         4         2         3         8         10        5         7         5         
+VardasNR            6PavardeNR           63         1         1         6         1         10        2         4         6         9         3         
+VardasNR            7PavardeNR           710        3         10        1         1         5         7         7         8         6         10        
+VardasNR            8PavardeNR           89         1         2         4         10        5         8         6         1         6         9         
+VardasNR            9PavardeNR           92         6         5         8         9         2         10        3         9         2         4         
+VardasNR            10PavardeNR           103         4         4         6         9         10        9         4         8         1         3         
+VardasNR            11PavardeNR           116         1         1         5         8         2         1         5         10        3         6         
+VardasNR            12PavardeNR           124         9         9         10        3         7         7         9         8         4         9         
