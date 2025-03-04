@@ -16,7 +16,7 @@ int main()
     try {
         srand(time(0)); //kiekvieną kartą generuojami nauji pažymiai
         cout << "Meniu (įveskite pasirinktos programos eigos nr.):" << endl;
-        cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo" << endl;
+        cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo, 6 - failų generatorius" << endl;
         int nr_meniu;
         cin >> nr_meniu;
 
@@ -60,7 +60,7 @@ int main()
             int nr_failas=1; //default reiksme
             cin >> nr_failas;
             string failo_pavadinimas;
-            if (nr_failas == 1) failo_pavadinimas = "kursiokai.txt";
+            if (nr_failas == 1) failo_pavadinimas = "kursiok4ai.txt";
             else if (nr_failas == 2) failo_pavadinimas = "studentai10000.txt";
             else if (nr_failas == 3) failo_pavadinimas = "studentai100000.txt";
             else if (nr_failas == 4) failo_pavadinimas = "studentai1000000.txt";
