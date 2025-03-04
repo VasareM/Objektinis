@@ -21,44 +21,15 @@ using std::vector;
 using std::string;
 using std::setw;
 
-int rand_pazymys()
-{
-    int pazymys;
-    pazymys=rand()%10+1;
-    return pazymys;
-}
-
-void failo_generavimas(string failo_pavadinimas, int nr_failo_dydis, int paz_kiekis)
-{
-    std::ofstream out(failo_pavadinimas);
-    out << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde";
-    for( int i=1; i<=paz_kiekis; i++)
-    {
-        out << std::setw(10) << ("ND" + std::to_string(i));
-    }
-    out << std::setw(10) << "Egz." << std::endl;
-    for (int i=0; i<nr_failo_dydis; i++)
-    {
-        out << std::left << std::setw(20) << ("VardasNR" + std::to_string(i + 1)) << std::setw(20) << ("PavardeNR" + std::to_string(i + 1));
-        for (int j=0; j<paz_kiekis; j++)
-        {
-            out << std::setw(10) << rand_pazymys();
-        }
-        out << std::setw(10) << rand_pazymys() << std::endl;
-    }
-}
-
 int main()
 {
     try {
         srand(time(0)); //kiekvieną kartą generuojami nauji pažymiai
         cout << "Meniu (įveskite pasirinktos programos eigos nr.):" << endl;
-        cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo, 6 - failų generatorius" << endl;
+        cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo, 6 - failų generatorius, 7 - testavimas" << endl;
         int nr_meniu;
         cin >> nr_meniu;
-
-        vartotojo_pasirinkimas(nr_meniu, 1, 6);
-
+        vartotojo_pasirinkimas(nr_meniu, 1, 7);
         if (nr_meniu==4)
         {
             cout << "Darbas baigtas" << endl;
@@ -68,41 +39,33 @@ int main()
         {
             cout << "Kokio dydžio failą generuosime? (įveskite eilučių kiekį)" << endl;
             int nr_failo_dydis;
+            auto kurimo_pradzia=std::chrono::high_resolution_clock::now();
             cin >> nr_failo_dydis;
             string failo_pavadinimas;
             //int paz_kiekis=rand()%15+1; //galimas, bet visus failus bus vienodas
             int paz_kiekis=7;
             failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
             failo_generavimas(failo_pavadinimas, nr_failo_dydis, paz_kiekis);
+            auto kurimo_pabaiga = std::chrono::high_resolution_clock::now();
+            auto kurimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(kurimo_pabaiga - kurimo_pradzia);
+            cout << "Failo kūrimo laikas: " << kurimo_trukme.count() << "s" << endl;
+            return 0;
+        }
+        if (nr_meniu==7)
+        {
             return 0;
         }
         cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
         int nr_rikiavimas;
         cin >> nr_rikiavimas;
         vartotojo_pasirinkimas(nr_rikiavimas, 1, 4);
-        /*
-        while (ar_beda(nr_rikiavimas, 1, 4))
-        {
-            cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
-            cin >> nr_rikiavimas;
-        }
-        */
         cout << "Kaip norėsite išvesti duomenis? \n 1 - į ekraną, 2 - į failą" << endl;
         int nr_spausdinimas;
         cin >> nr_spausdinimas;
         vartotojo_pasirinkimas(nr_spausdinimas, 1, 2);
-        /*
-        while (ar_beda(nr_spausdinimas, 1, 2))
-        {
-            cout << "Tokio pasirinkimo nėra, pakartokite" << endl;
-            cin >> nr_spausdinimas;
-        }
-            */  
         int m=0, n=0; //m-studentai, n-nd
         int paz, egz;
-        vector <studentai> grupe;
-        //grupes studentu pazymiai
-
+        vector <studentai> grupe;     //grupes studentu pazymiai
         if (nr_meniu==5)
         {
             cout << "Išsirinkite darbinį failą: \n 1 - kursiokai.txt, 2 - studentai10000.txt, 3 - studentai100000.txt, 4 - studentai1000000.txt" << endl;

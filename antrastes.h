@@ -23,6 +23,8 @@ using std::string;
 void vartotojo_pasirinkimas(int &nr_meniu, int a, int b);
 bool ar_beda(int x, int pr, int pb);
 bool ar_beda_bendras(int x, int pr, int pb);
+int rand_pazymys();
+void failo_generavimas(string failo_pavadinimas, int nr_failo_dydis, int paz_kiekis);
 int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp);
 string vardo_generavimas();
 string pavardes_generavimas();

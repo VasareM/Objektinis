@@ -61,6 +61,32 @@ bool ar_beda_bendras(int x, int pr, int pb)
     }
     return false;
 }
+int rand_pazymys()
+{
+    int pazymys;
+    pazymys=rand()%10+1;
+    return pazymys;
+}
+
+void failo_generavimas(string failo_pavadinimas, int nr_failo_dydis, int paz_kiekis)
+{
+    std::ofstream out(failo_pavadinimas);
+    out << std::left << std::setw(20) << "Vardas" << std::setw(20) << "Pavarde";
+    for( int i=1; i<=paz_kiekis; i++)
+    {
+        out << std::setw(10) << ("ND" + std::to_string(i));
+    }
+    out << std::setw(10) << "Egz." << std::endl;
+    for (int i=0; i<nr_failo_dydis; i++)
+    {
+        out << std::left << std::setw(20) << ("VardasNR" + std::to_string(i + 1)) << std::setw(20) << ("PavardeNR" + std::to_string(i + 1));
+        for (int j=0; j<paz_kiekis; j++)
+        {
+            out << std::setw(10) << rand_pazymys();
+        }
+        out << std::setw(10) << rand_pazymys() << std::endl;
+    }
+}
 int mediana_skaiciavimas(vector <int> &pazymiai, studentai &temp)
 {
     int n=temp.pazymiai.size(), med=0;
