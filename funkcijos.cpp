@@ -126,9 +126,9 @@ void spausdinimas(vector <studentai> grupe)
         //cout << endl;
     }
 }
-void spausdinimas_faile(vector <studentai> grupe)
+void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas)
 {
-    ofstream out ("rezultatai.txt");
+    ofstream out (outputo_pavadinimas);
     out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     out << string(85, '-') << endl;
     for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
@@ -138,6 +138,7 @@ void spausdinimas_faile(vector <studentai> grupe)
         //for(const auto&n:m.pazymiai) cout << n << " "               //cout << endl;
     }
 }
+
 void rikiavimas(int nr_rikiavimas, vector <studentai> &grupe)
 {
     if (nr_rikiavimas==1) sort(grupe.begin(),grupe.end(), [](studentai a, studentai b) {return a.vardas<b.vardas;});
@@ -156,7 +157,7 @@ void spausdinimo_parinkimas(std::vector<studentai> grupe, int nr_spausdinimas, i
     {
         rikiavimas(nr_rikiavimas, grupe);
         if (nr_spausdinimas==1) spausdinimas(grupe);
-        else if (nr_spausdinimas==2) spausdinimas_faile(grupe);
+        else if (nr_spausdinimas==2) spausdinimas_faile(grupe, "rezultatai.txt");
         else cout << "Tokio spausdinimo būdo nėra" << endl;
     }
     else cout << "Nėra duomenų" << endl;

@@ -60,7 +60,12 @@ int main()
         }
         if (nr_meniu==7)
         {
-            int failu_dydziai[5]={1000, 10000, 100000, 1000000, 10000000};
+            cout << "Kaip išrikiuoti studentus? Pagal... \n 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
+            int nr_rikiavimas;
+            cin >> nr_rikiavimas;
+            vartotojo_pasirinkimas(nr_rikiavimas, 3, 4);
+            int n=0, nr_failo_dydis, failu_dydziai[5]={1000, 10000, 100000, 1000000, 10000000};
+            string failo_pavadinimas;
             for (int i=0; i<5; i++)
             {
                 nr_failo_dydis=failu_dydziai[i];
@@ -73,7 +78,7 @@ int main()
                 cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_nuskaitymo_trukme.count() << "s" << endl;
 
                 auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
-                rikiavimas(3, grupe);
+                rikiavimas(nr_rikiavimas, grupe);
                 auto failo_sort_pabaiga = std::chrono::high_resolution_clock::now();
                 auto failo_sort_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo_sort_pabaiga - failo_sort_pradzia);
                 cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_sort_trukme.count() << "s" << endl;
@@ -85,22 +90,27 @@ int main()
                     if (grupe[i].gal_vid<5) nelaimingi.push_back(grupe[i]);
                     else galvociai.push_back(grupe[i]);
                 }
-                /// panaikint tą vector gal
                 auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
                 auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
-                cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas, panaikinant pradinį Vektor: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;
+                cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;
                 
-                cout << nr_failo_dydis << " įrašų nelaimingų įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                auto nelaimingu_pradzia=std::chrono::high_resolution_clock::now();
+                spausdinimas_faile(nelaimingi, "nelaimingi.txt");
+                auto nelaimingu_pabaiga = std::chrono::high_resolution_clock::now();
+                auto nelaimingu_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(nelaimingu_pabaiga - nelaimingu_pradzia);
+                cout << nr_failo_dydis << " įrašų nelaimingų įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << nelaimingu_trukme.count() << "s" << endl;
                 
-                cout << nr_failo_dydis << " įrašų galvočių įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                auto galvociu_pradzia=std::chrono::high_resolution_clock::now();
+                spausdinimas_faile(galvociai, "galvociai.txt");
+                auto galvociu_pabaiga = std::chrono::high_resolution_clock::now();
+                auto galvociu_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(galvociu_pabaiga - galvociu_pradzia);
+                cout << nr_failo_dydis << " įrašų galvočių įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << galvociu_trukme.count() << "s" << endl;
             
-
-
                 cout << endl;
                 auto pilna_pabaiga = std::chrono::high_resolution_clock::now();
                 auto pilna_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(pilna_pabaiga - failo_nuskaitymo_pradzia);
                 cout << nr_failo_dydis << " įrašų testo laikas: " << std::fixed << std::setprecision(5) << pilna_trukme.count() << "s" << endl;
-            
+                cout << endl << endl;
             }
             return 0;
         }

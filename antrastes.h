@@ -30,7 +30,7 @@ string vardo_generavimas();
 string pavardes_generavimas();
 
 void spausdinimas(vector<studentai> grupe);
-void spausdinimas_faile(vector<studentai> grupe);
+void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas);
 
 void rikiavimas(int nr_rikiavimas, vector<studentai> &grupe);
 void spausdinimo_parinkimas(vector<studentai> grupe, int nr_spausdinimas, int nr_rikiavimas);
