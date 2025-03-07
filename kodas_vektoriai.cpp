@@ -65,24 +65,41 @@ int main()
             {
                 nr_failo_dydis=failu_dydziai[i];
                 failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
-                auto failo_darbo_pradzia=std::chrono::high_resolution_clock::now();
+                vector <studentai> grupe;
+                auto failo_nuskaitymo_pradzia=std::chrono::high_resolution_clock::now();
+                nuskaitymas(failo_pavadinimas, grupe, n);
+                auto failo_nuskaitymo_pabaiga = std::chrono::high_resolution_clock::now();
+                auto failo_nuskaitymo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_nuskaitymo_pabaiga - failo_nuskaitymo_pradzia);
+                cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_nuskaitymo_trukme.count() << "s" << endl;
 
-
-                auto failo_darbo_pabaiga = std::chrono::high_resolution_clock::now();
-                auto failo_darbo_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo_darbo_pabaiga - failo_darbo_pradzia);
-
-                cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
-                cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
-                cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas, panaikinant pradinį Vektor: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
+                rikiavimas(3, grupe);
+                auto failo_sort_pabaiga = std::chrono::high_resolution_clock::now();
+                auto failo_sort_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo_sort_pabaiga - failo_sort_pradzia);
+                cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_sort_trukme.count() << "s" << endl;
+                
+                auto failo_dalijimo_pradzia=std::chrono::high_resolution_clock::now();
+                vector <studentai> galvociai, nelaimingi;
+                for (int i=0; i<grupe.size(); i++)
+                {
+                    if (grupe[i].gal_vid<5) nelaimingi.push_back(grupe[i]);
+                    else galvociai.push_back(grupe[i]);
+                }
+                /// panaikint tą vector gal
+                auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
+                auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
+                cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas, panaikinant pradinį Vektor: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;
+                
                 cout << nr_failo_dydis << " įrašų nelaimingų įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                
                 cout << nr_failo_dydis << " įrašų galvočių įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
             
 
 
                 cout << endl;
                 auto pilna_pabaiga = std::chrono::high_resolution_clock::now();
-                auto pilna_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(pilna_pabaiga - failo_darbo_pradzia);
-                cout << nr_failo_dydis << " įrašų testo laikas: " << std::fixed << std::setprecision(5) << failo_darbo__trukme.count() << "s" << endl;
+                auto pilna_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(pilna_pabaiga - failo_nuskaitymo_pradzia);
+                cout << nr_failo_dydis << " įrašų testo laikas: " << std::fixed << std::setprecision(5) << pilna_trukme.count() << "s" << endl;
             
             }
             return 0;
