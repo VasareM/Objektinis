@@ -72,11 +72,13 @@ int main()
                 failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
                 vector <studentai> grupe;
                 auto failo_nuskaitymo_pradzia=std::chrono::high_resolution_clock::now();
+                //cout << failo_pavadinimas << endl;
                 nuskaitymas(failo_pavadinimas, grupe, n);
                 auto failo_nuskaitymo_pabaiga = std::chrono::high_resolution_clock::now();
                 auto failo_nuskaitymo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_nuskaitymo_pabaiga - failo_nuskaitymo_pradzia);
                 cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_nuskaitymo_trukme.count() << "s" << endl;
 
+                skaiciavimas(grupe, n);
                 auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
                 rikiavimas(nr_rikiavimas, grupe);
                 auto failo_sort_pabaiga = std::chrono::high_resolution_clock::now();
@@ -87,7 +89,9 @@ int main()
                 vector <studentai> galvociai, nelaimingi;
                 for (int i=0; i<grupe.size(); i++)
                 {
-                    if (grupe[i].gal_vid<5) nelaimingi.push_back(grupe[i]);
+                    //cout << grupe[i].gal_vid << endl;
+                    if (nr_rikiavimas==3 && grupe[i].gal_vid<5) nelaimingi.push_back(grupe[i]);
+                    else if (nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
                     else galvociai.push_back(grupe[i]);
                 }
                 auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();

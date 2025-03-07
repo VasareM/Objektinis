@@ -207,16 +207,25 @@ void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int 
         std::istringstream ss(eilute);
         n = std::distance(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>()) - 3;
     }
-
     while (getline(in, eilute)) {
         std::istringstream iss(eilute);
         studentai temp;
         iss >> temp.vardas >> temp.pavarde;
-
+        //cout << endl << temp.vardas << " " << temp.pavarde ;
+        for (int i=0; i<n; i++) {
+            int paz;
+            iss >> paz;
+            temp.pazymiai.push_back(paz);
+            //cout << " " << paz;
+        }
         // Read grades efficiently
         temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
-        temp.egzam = temp.pazymiai.back();
-        temp.pazymiai.pop_back(); // Remove from the vector
+        if (!temp.pazymiai.empty()) {
+            temp.egzam = temp.pazymiai.back();
+            temp.pazymiai.pop_back(); // Remove from the vector
+        } else {
+            temp.egzam = 0; // Default to 0 if no grades are found
+        }
         grupe.push_back(std::move(temp)); // to optimize vector insertion
     }
     in.close();
@@ -230,6 +239,7 @@ void skaiciavimas(vector <studentai> &grupe, int n)
         m.mediana=mediana_skaiciavimas(m.pazymiai, m);
         m.gal_vid=galutinis_vid_sk(m, m.vidurkis);
         m.gal_med=galutinis_med_sk(m, m.mediana);
+        //cout << m.vardas << " " << m.pavarde << " " << m.vidurkis << " " << m.mediana << " " << m.gal_vid << " " << m.gal_med << endl;
     }
 }
 
