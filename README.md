@@ -8,6 +8,7 @@ Legenda:
 - violetiniai paryškintas testuojamo failo trijų bandymų laikų vidurkis
 
 ##### Pirmi trys atvejai, paeiliui su 1000, 10000, 100000 eilučių failais
-![Image](https://github.com/user-attachments/assets/90d734f6-2ff8-4e15-8d39-1cbd7d35615e)
+![Image](https://github.com/user-attachments/assets/32aaaff9-8ae9-41e2-843a-59e215c0ee31)
+
 ##### Tolesni du atvejai, paeiliui su 1000000, 10000000 eilučių failais
-![Image](https://github.com/user-attachments/assets/62618c1e-a362-4b2f-b350-830a55a9a627)
+![Image](https://github.com/user-attachments/assets/be6bec2d-1644-4183-bad6-69feb3871c4b)
