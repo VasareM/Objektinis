@@ -207,17 +207,21 @@ void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int 
         std::istringstream ss(eilute);
         n = std::distance(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>()) - 3;
     }
-    while (getline(in, eilute)) {
+    while (getline(in, eilute)) 
+    {
         std::istringstream iss(eilute);
         studentai temp;
         iss >> temp.vardas >> temp.pavarde;
         //cout << endl << temp.vardas << " " << temp.pavarde ;
+        
+        /*
         for (int i=0; i<n; i++) {
             int paz;
             iss >> paz;
             temp.pazymiai.push_back(paz);
             //cout << " " << paz;
         }
+        */
         // Read grades efficiently
         temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
         if (!temp.pazymiai.empty()) {
@@ -226,6 +230,12 @@ void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int 
         } else {
             temp.egzam = 0; // Default to 0 if no grades are found
         }
+            /*
+           temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
+           temp.egzam = temp.pazymiai.back();
+           temp.pazymiai.pop_back(); // Remove from the vector
+           */
+
         grupe.push_back(std::move(temp)); // to optimize vector insertion
     }
     in.close();

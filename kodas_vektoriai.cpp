@@ -90,8 +90,7 @@ int main()
                 for (int i=0; i<grupe.size(); i++)
                 {
                     //cout << grupe[i].gal_vid << endl;
-                    if (nr_rikiavimas==3 && grupe[i].gal_vid<5) nelaimingi.push_back(grupe[i]);
-                    else if (nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
+                    if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
                     else galvociai.push_back(grupe[i]);
                 }
                 auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
