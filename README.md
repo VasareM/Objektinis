@@ -1,6 +1,13 @@
-# Objektinis
-### Pirmas tyrimas: *pradinių failų kūrimas*
-![Image](https://github.com/user-attachments/assets/2ea358c7-b235-46dd-a3a6-6ed5060003bb)
+prid4ti trečią strategiją --> ar tik su vektoriais?
+
+testuot su visais failais, konteineriais ir strategijom --> fiksuot konteinerių efektyvmą ir aprašyti
+
+pridėti lenteles
+
+sukurti programos diegimo ir paleidimo Make arba CMake failą 
+bei programo/ų paleisties proceso instrukciją. 
+
+
 
 ### Antras tyrimas: *duomenų apdorojimas, testuojami anksčiau sugeneruoti failai*
 Legenda:
