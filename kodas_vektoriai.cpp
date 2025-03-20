@@ -21,7 +21,7 @@ using std::vector;
 using std::string;
 using std::setw;
 
-void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n)
+void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
 {
     vector <studentai> grupe;
     auto failo_nuskaitymo_pradzia=std::chrono::high_resolution_clock::now();
@@ -39,9 +39,9 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
     cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_sort_trukme.count() << "s" << endl;
     
     auto failo_dalijimo_pradzia=std::chrono::high_resolution_clock::now();
+    vector <studentai> galvociai, nelaimingi;
     if (strategijos_nr==1)
     {
-        vector <studentai> galvociai, nelaimingi;
         for (int i=0; i<grupe.size(); i++)
         {
             if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
@@ -50,7 +50,6 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
     }
     if (strategijos_nr==2)
     {
-        vector <studentai> nelaimingi;
         for (int i=0; i<grupe.size(); i++)
         {
             if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) 
@@ -60,12 +59,21 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
             }
         }
     }
+    if (strategijos_nr==3)
+    {
+        for (int i=0; i<grupe.size(); i++)
+        {
+            if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
+            else galvociai.push_back(grupe[i]);
+            // remove if prid4t
+        }
+    }
     auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
     auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
     cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;
     
     spausdinimas_faile(nelaimingi, "nelaimingi.txt");
-    if (strategijos_nr==1) spausdinimas_faile(galvociai, "galvociai.txt");
+    if (strategijos_nr==1 || strategijos_nr==3) spausdinimas_faile(galvociai, "galvociai.txt");
     else if (strategijos_nr==2) spausdinimas_faile(grupe, "galvociai.txt");
     /*
     auto nelaimingu_pradzia=std::chrono::high_resolution_clock::now();
@@ -79,13 +87,21 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
     auto galvociu_pabaiga = std::chrono::high_resolution_clock::now();
     auto galvociu_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(galvociu_pabaiga - galvociu_pradzia);
     cout << nr_failo_dydis << " įrašų galvočių įrašymo į failą laikas: " << std::fixed << std::setprecision(5) << galvociu_trukme.count() << "s" << endl;
-
+    */
     cout << endl;
     auto pilna_pabaiga = std::chrono::high_resolution_clock::now();
     auto pilna_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(pilna_pabaiga - failo_nuskaitymo_pradzia);
     cout << nr_failo_dydis << " įrašų testo laikas: " << std::fixed << std::setprecision(5) << pilna_trukme.count() << "s" << endl;
     cout << endl << endl;
-    */
+    
+}
+void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
+{
+    cout << "list" << endl;
+}
+void deque_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
+{
+    cout << "deque" << endl;
 }
 
 
@@ -167,9 +183,9 @@ int main()
                 {
                     nr_failo_dydis=failu_dydziai[i];
                     failo_pavadinimas="sukurtas_studentai"+std::to_string(nr_failo_dydis)+".txt";
-                    septintas_meniu(failo_pavadinimas, nr_failo_dydis, nr_rikiavimas, n);
-                    list_veiksmai(failo_pavadinimas, nr_failo_dydis, nr_rikiavimas, n);
-                    deque_veiksmai(failo_pavadinimas, nr_failo_dydis, nr_rikiavimas, n);
+                    septintas_meniu(failo_pavadinimas, nr_failo_dydis, nr_rikiavimas, n, strategijos_nr);
+                    list_veiksmai(failo_pavadinimas, nr_failo_dydis, nr_rikiavimas, n, strategijos_nr);
+                    deque_veiksmai(failo_pavadinimas, nr_failo_dydis, nr_rikiavimas, n, strategijos_nr);
                 
                 }
             }
