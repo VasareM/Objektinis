@@ -26,10 +26,12 @@ int main()
     try {
         srand(time(0)); //kiekvieną kartą generuojami nauji pažymiai
         cout << "Meniu (įveskite pasirinktos programos eigos nr.):" << endl;
-        cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą, 5 - nuskaityti duomenis iš failo, 6 - failų generatorius, 7 - testavimas" << endl;
+        cout << "1 - ranka įveskite duomenis, 2 - generuoti pažymius, 3 - generuoti pažymius ir studentų vardus, 4 - baigti darbą;" << endl;
+        cout << "5 - nuskaityti duomenis iš failo, 6 - failų generatorius;" << endl;
+        cout <<  "7 - testavimas su vector \n8 - testavimas su list \n9 - testavimas su deque" << endl;
         int nr_meniu;
         cin >> nr_meniu;
-        vartotojo_pasirinkimas(nr_meniu, 1, 7);
+        vartotojo_pasirinkimas(nr_meniu, 1, 9);
         if (nr_meniu==4)
         {
             cout << "Darbas baigtas" << endl;
@@ -117,6 +119,7 @@ int main()
             }
             return 0;
         }
+        
         cout << "Kaip išrikiuoti studentus? Pagal... \n 1 - vardą, 2 - pavardę, 3 - galutinį pažymį pagal vidurkį, 4 - galutinį pažymį pagal medianą" << endl;
         int nr_rikiavimas;
         cin >> nr_rikiavimas;
