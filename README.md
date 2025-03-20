@@ -1,3 +1,5 @@
+pasirinkta strategija:
+![Image](https://github.com/user-attachments/assets/8424e1e8-55f0-4caa-a1ef-8c3897263971)
 prid4ti trečią strategiją --> ar tik su vektoriais?
 
 testuot su visais failais, konteineriais ir strategijom --> fiksuot konteinerių efektyvmą ir aprašyti
