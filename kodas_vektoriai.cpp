@@ -148,11 +148,20 @@ void skaiciavimas_list(list <studentai> &grupe, int n)
         m.gal_med=galutinis_med_sk(m, m.mediana);
     }
 }
-void spausdinimas_faile_list(list <studentai> grupe, const string& outputo_pavadinimas)
+bool maziau_listui(const studentai& a, const studentai& b, int nr_rikiavimas)
+{
+    if (nr_rikiavimas==3) return a.gal_vid<b.gal_vid;
+    else if (nr_rikiavimas==4) return a.gal_med<b.gal_med;
+    else return false;
+}
+void spausdinimas_faile_list(list <studentai> grupe, const string& outputo_pavadinimas, int nr_rikiavimas)
 {
     ofstream out (outputo_pavadinimas);
     out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     out << string(85, '-') << endl;
+    grupe.sort([&](const studentai& a, const studentai& b) {
+        return maziau_listui(a, b, nr_rikiavimas);
+    });
     for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
     {
         out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
@@ -192,6 +201,9 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
     {
         auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
         //rikiavimas(nr_rikiavimas, grupe);
+        grupe.sort([&](const studentai& a, const studentai& b) {
+            return maziau_listui(a, b, nr_rikiavimas);
+        });
         auto failo_sort_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_sort_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo_sort_pabaiga - failo_sort_pradzia);
         cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_sort_trukme.count() << "s" << endl;
@@ -206,6 +218,7 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
                 else galvociai.push_back(grupe[i]);
             }
         }
+            
         if (strategijos_nr==2)
         {
             list <studentai> temp;
@@ -218,15 +231,15 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
             }
             grupe = std::move(temp);
         }
-            */
+        */
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
     }
 
-    spausdinimas_faile_list(nelaimingi, "nelaimingi.txt");
-    if (strategijos_nr==1 || strategijos_nr==3) spausdinimas_faile_list(galvociai, "galvociai.txt");
-    else if (strategijos_nr==2) spausdinimas_faile_list(grupe, "galvociai.txt");
+    spausdinimas_faile_list(nelaimingi, "nelaimingi.txt", nr_rikiavimas);
+    if (strategijos_nr==1 || strategijos_nr==3) spausdinimas_faile_list(galvociai, "galvociai.txt", nr_rikiavimas);
+    else if (strategijos_nr==2) spausdinimas_faile_list(grupe, "galvociai.txt", nr_rikiavimas);
 
     cout << endl;
     auto pilna_pabaiga = std::chrono::high_resolution_clock::now();
