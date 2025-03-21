@@ -3,7 +3,7 @@
 
 #include <exception>
 #include <limits>
-// vėliau ištrint:
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -184,6 +184,9 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
     if (strategijos_nr==3)
     {
         auto failo3_sort_pradzia=std::chrono::high_resolution_clock::now();
+        /*grupe.sort([&](const studentai& a, const studentai& b) {
+            return maziau_listui(a, b, nr_rikiavimas);
+        });*/
         auto perskyrimas = std::stable_partition(grupe.begin(), grupe.end(), [&](const studentai& s) {
             return (nr_rikiavimas == 3 && s.gal_vid < 5) || (nr_rikiavimas == 4 && s.gal_med < 5);
         });
@@ -191,7 +194,7 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
         auto failo3_sort_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo3_sort_pabaiga - failo3_sort_pradzia);
         cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su stable_partition funkcija: " << std::fixed << std::setprecision(5) << failo3_sort_trukme.count() << "s" << endl;
         auto failo3_dalijimo_pradzia=std::chrono::high_resolution_clock::now();
-
+        
         nelaimingi.assign(grupe.begin(), perskyrimas);
         galvociai.assign(perskyrimas, grupe.end());
         auto failo3_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
@@ -304,7 +307,9 @@ void spausdinimas_faile_deque(deque <studentai> grupe, const string& outputo_pav
     ofstream out (outputo_pavadinimas);
     out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
     out << string(85, '-') << endl;
-
+    std::sort(grupe.begin(), grupe.end(), [&](const studentai& a, const studentai& b) {
+        return maziau_listui(a, b, nr_rikiavimas);
+    });
     for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
     {
         out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
@@ -446,7 +451,11 @@ int main()
             vartotojo_pasirinkimas(strategijos_nr, 1, 3);
             int n=0, nr_failo_dydis, failu_dydziai[5]={1000, 10000, 100000, 1000000, 10000000};
             string failo_pavadinimas;
+            ///////////////
+            /////////
             int kiek_failu=5;
+            /////////
+            ///////////////
             for (int i=0; i<kiek_failu; i++)
             {
                 nr_failo_dydis=failu_dydziai[i];
