@@ -1,8 +1,3 @@
-pasirinkta strategija:
-![Image](https://github.com/user-attachments/assets/8424e1e8-55f0-4caa-a1ef-8c3897263971)
-prid4ti trečią strategiją --> ar tik su vektoriais?
-
-testuot su visais failais, konteineriais ir strategijom --> fiksuot konteinerių efektyvmą ir aprašyti
 
 pridėti lenteles
 
@@ -14,7 +9,6 @@ bei programo/ų paleisties proceso instrukciją.
 ### Antras tyrimas: *duomenų apdorojimas, testuojami anksčiau sugeneruoti failai*
 Legenda:
 - melsvai paryškintas testuojamo failo įrašų kiekis
-- violetiniai paryškintas testuojamo failo trijų bandymų laikų vidurkis
 
 ##### Pirmi trys atvejai, paeiliui su 1000, 10000, 100000 eilučių failais
 ![Image](https://github.com/user-attachments/assets/32aaaff9-8ae9-41e2-843a-59e215c0ee31)
