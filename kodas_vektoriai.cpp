@@ -209,29 +209,31 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
         cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_sort_trukme.count() << "s" << endl;
         
         auto failo_dalijimo_pradzia=std::chrono::high_resolution_clock::now();
-        /*
+        
         if (strategijos_nr==1)
         {
-            for (int i=0; i<grupe.size(); i++)
+            for (auto it = grupe.begin(); it != grupe.end(); ++it)
             {
-                if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
-                else galvociai.push_back(grupe[i]);
+                if ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5))
+                    nelaimingi.push_back(*it);
+                else
+                    galvociai.push_back(*it);
             }
         }
             
         if (strategijos_nr==2)
         {
-            list <studentai> temp;
-            for (const auto& student : grupe)
+            list<studentai> temp;
+            for (auto it = grupe.begin(); it != grupe.end(); ++it)
             {
-                if ((nr_rikiavimas == 3 && student.gal_vid < 5) || (nr_rikiavimas == 4 && student.gal_med < 5))
-                    nelaimingi.push_back(student);
+                if ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5))
+                    nelaimingi.push_back(*it);
                 else
-                    temp.push_back(student);
+                    temp.push_back(*it);
             }
             grupe = std::move(temp);
         }
-        */
+        
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
