@@ -15,12 +15,16 @@
 #include <chrono>
 #include <list>
 
+
 using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
 using std::string;
 using std::setw;
+using std::ifstream;
+using std::ofstream;
+using std::sort;
 using std::list;
 
 void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
@@ -96,16 +100,75 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
     cout << endl << endl;
     
 }
-//void nuskaitymas_list()
+void nuskaitymas_list(const string& failo_pavadinimas, list <studentai>& grupe, int &n) 
+{
+    std::ios::sync_with_stdio(false); // Optimize input speed
+    ifstream in;
+    try {
+        in.open(failo_pavadinimas);
+        if (!in.is_open()) {
+            throw std::runtime_error("Problema failo nuskaityme");
+        }
+    } catch (const std::exception& e) {
+        cout << e.what() << endl;
+        return;
+    }
+    string eilute;
+
+    n=-3; // 3 - vardas, pavarde, egzamino pazymys
+    if (getline(in, eilute)) {
+        std::istringstream ss(eilute);
+        n = std::distance(std::istream_iterator<std::string>(ss), std::istream_iterator<std::string>()) - 3;
+    }
+    while (getline(in, eilute)) 
+    {
+        std::istringstream iss(eilute);
+        studentai temp;
+        iss >> temp.vardas >> temp.pavarde;
+
+        temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
+        if (!temp.pazymiai.empty()) {
+            temp.egzam = temp.pazymiai.back();
+            temp.pazymiai.pop_back(); // Remove from the vector
+        } else {
+            temp.egzam = 0; // Default to 0 if no grades are found
+        }
+        grupe.push_back(std::move(temp)); // to optimize vector insertion
+    }
+    in.close();
+}
+void skaiciavimas_list(list <studentai> &grupe, int n)
+{
+    for (auto& m:grupe)
+    {
+        m.suma=sumos_skaiciavimas(m.pazymiai, m);
+        m.vidurkis=vidurkio_skaiciavimas(m.pazymiai, m);
+        m.mediana=mediana_skaiciavimas(m.pazymiai, m);
+        m.gal_vid=galutinis_vid_sk(m, m.vidurkis);
+        m.gal_med=galutinis_med_sk(m, m.mediana);
+    }
+}
+void spausdinimas_faile_list(list <studentai> grupe, const string& outputo_pavadinimas)
+{
+    ofstream out (outputo_pavadinimas);
+    out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
+    out << string(85, '-') << endl;
+    for (const auto&m:grupe) //visi elementai is eiles is grupes; const, kad nesikopijuot7
+    {
+        out << std::left << setw(25) << m.pavarde << setw(20) << m.vardas;
+        out << setw(20) << std::fixed << std::setprecision(2) << m.gal_vid << setw(20) << m.gal_med << endl;
+        //for(const auto&n:m.pazymiai) cout << n << " "               //cout << endl;
+    }
+}
 void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
 {
     list <studentai> grupe;
     auto failo_nuskaitymo_pradzia=std::chrono::high_resolution_clock::now();
-    nuskaitymas(failo_pavadinimas, grupe, n);
+    nuskaitymas_list(failo_pavadinimas, grupe, n);
     auto failo_nuskaitymo_pabaiga = std::chrono::high_resolution_clock::now();
     auto failo_nuskaitymo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_nuskaitymo_pabaiga - failo_nuskaitymo_pradzia);
     cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_nuskaitymo_trukme.count() << "s" << endl;
-    skaiciavimas(grupe, n);
+    skaiciavimas_list(grupe, n);
     list <studentai> galvociai, nelaimingi;
     if (strategijos_nr==3)
     {
@@ -161,9 +224,9 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
     }
 
-    spausdinimas_faile(nelaimingi, "nelaimingi.txt");
-    if (strategijos_nr==1 || strategijos_nr==3) spausdinimas_faile(galvociai, "galvociai.txt");
-    else if (strategijos_nr==2) spausdinimas_faile(grupe, "galvociai.txt");
+    spausdinimas_faile_list(nelaimingi, "nelaimingi.txt");
+    if (strategijos_nr==1 || strategijos_nr==3) spausdinimas_faile_list(galvociai, "galvociai.txt");
+    else if (strategijos_nr==2) spausdinimas_faile_list(grupe, "galvociai.txt");
 
     cout << endl;
     auto pilna_pabaiga = std::chrono::high_resolution_clock::now();

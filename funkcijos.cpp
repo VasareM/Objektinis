@@ -126,9 +126,9 @@ void spausdinimas(vector <studentai> grupe)
         //cout << endl;
     }
 }
-//void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas)
-template <typename Container>
-void spausdinimas_faile(const Container& grupe, const string& outputo_pavadinimas)
+void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas)
+//template <typename Container>
+//void spausdinimas_faile(const Container& grupe, const string& outputo_pavadinimas)
 {
     ofstream out (outputo_pavadinimas);
     out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
@@ -189,9 +189,9 @@ double galutinis_med_sk(studentai &temp, int &mediana)
     return gal_v;
 }
 
-//void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) 
-template <typename Container>
-void nuskaitymas(const string& failo_pavadinimas, Container& grupe, int &n) 
+void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) 
+//template <typename Container>
+//void nuskaitymas(const string& failo_pavadinimas, Container& grupe, int &n) 
 {
     std::ios::sync_with_stdio(false); // Optimize input speed
     ifstream in;
@@ -205,8 +205,7 @@ void nuskaitymas(const string& failo_pavadinimas, Container& grupe, int &n)
         return;
     }
     string eilute;
-//string laikina;
-    //getline(in, eilute); // Skip the header line
+
     n=-3; // 3 - vardas, pavarde, egzamino pazymys
     if (getline(in, eilute)) {
         std::istringstream ss(eilute);
@@ -217,17 +216,7 @@ void nuskaitymas(const string& failo_pavadinimas, Container& grupe, int &n)
         std::istringstream iss(eilute);
         studentai temp;
         iss >> temp.vardas >> temp.pavarde;
-        //cout << endl << temp.vardas << " " << temp.pavarde ;
-        
-        /*
-        for (int i=0; i<n; i++) {
-            int paz;
-            iss >> paz;
-            temp.pazymiai.push_back(paz);
-            //cout << " " << paz;
-        }
-        */
-        // Read grades efficiently
+
         temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
         if (!temp.pazymiai.empty()) {
             temp.egzam = temp.pazymiai.back();
@@ -235,19 +224,13 @@ void nuskaitymas(const string& failo_pavadinimas, Container& grupe, int &n)
         } else {
             temp.egzam = 0; // Default to 0 if no grades are found
         }
-            /*
-           temp.pazymiai.assign(std::istream_iterator<int>(iss), std::istream_iterator<int>());
-           temp.egzam = temp.pazymiai.back();
-           temp.pazymiai.pop_back(); // Remove from the vector
-           */
-
         grupe.push_back(std::move(temp)); // to optimize vector insertion
     }
     in.close();
 }
-//void skaiciavimas(vector <studentai> &grupe, int n)
-template <typename Container>
-void skaiciavimas(Container& grupe, int n)
+void skaiciavimas(vector <studentai> &grupe, int n)
+//template <typename Container>
+//void skaiciavimas(Container& grupe, int n)
 {
     for (auto& m:grupe)
     {
@@ -256,7 +239,6 @@ void skaiciavimas(Container& grupe, int n)
         m.mediana=mediana_skaiciavimas(m.pazymiai, m);
         m.gal_vid=galutinis_vid_sk(m, m.vidurkis);
         m.gal_med=galutinis_med_sk(m, m.mediana);
-        //cout << m.vardas << " " << m.pavarde << " " << m.vidurkis << " " << m.mediana << " " << m.gal_vid << " " << m.gal_med << endl;
     }
 }
 
