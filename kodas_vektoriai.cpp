@@ -32,6 +32,7 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
     cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_nuskaitymo_trukme.count() << "s" << endl;
     ///
     skaiciavimas(grupe, n);
+
     auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
     rikiavimas(nr_rikiavimas, grupe);
     auto failo_sort_pabaiga = std::chrono::high_resolution_clock::now();
@@ -61,12 +62,28 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
     }
     if (strategijos_nr==3)
     {
+        std::copy_if(grupe.begin(), grupe.end(), std::back_inserter(nelaimingi), [&](const auto& student) {
+            return (nr_rikiavimas == 3 && student.gal_vid < 5) || (nr_rikiavimas == 4 && student.gal_med < 5);
+        });
+    
+        std::copy_if(grupe.begin(), grupe.end(), std::back_inserter(galvociai), [&](const auto& student) {
+            return !((nr_rikiavimas == 3 && student.gal_vid < 5) || (nr_rikiavimas == 4 && student.gal_med < 5));
+        });
+        /*
+        auto perskyrimas = std::partition(grupe.begin(), grupe.end(), [&](const studentai& s) {
+            return (nr_rikiavimas == 3 && s.gal_vid < 5) || (nr_rikiavimas == 4 && s.gal_med < 5);
+        });
+        nelaimingi.assign(grupe.begin(), perskyrimas);
+        galvociai.assign(perskyrimas, grupe.end());
+        */
+        /*
         for (int i=0; i<grupe.size(); i++)
         {
             if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
             else galvociai.push_back(grupe[i]);
             // remove if prid4t
         }
+        */
     }
     auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
     auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
