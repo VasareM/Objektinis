@@ -30,7 +30,7 @@ string vardo_generavimas();
 string pavardes_generavimas();
 
 void spausdinimas(vector<studentai> grupe);
-void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas);
+//void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas);
 
 void rikiavimas(int nr_rikiavimas, vector<studentai> &grupe);
 void spausdinimo_parinkimas(vector<studentai> grupe, int nr_spausdinimas, int nr_rikiavimas);
@@ -41,8 +41,15 @@ double vidurkio_skaiciavimas(vector <int> &pazymiai, studentai &temp);
 double galutinis_vid_sk(studentai &temp, double &vidurkis);
 double galutinis_med_sk(studentai &temp, int &mediana);
 
+//galimai reikia daugiau template eiluciu, pries kiekviena:
+template <typename Container>
+void spausdinimas_faile(const Container& grupe, const std::string& outputo_pavadinimas);
+template <typename Container>
+void nuskaitymas(const std::string& failo_pavadinimas, Container& grupe, int &n);
+template <typename Container>
+void skaiciavimas(Container& grupe, int n);
 
-void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n);
-void skaiciavimas(vector<studentai>& grupe, int n);
+//void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n);
+//void skaiciavimas(vector<studentai>& grupe, int n);
 
 #endif // ANTRASTES_H

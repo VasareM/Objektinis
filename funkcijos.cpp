@@ -126,7 +126,9 @@ void spausdinimas(vector <studentai> grupe)
         //cout << endl;
     }
 }
-void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas)
+//void spausdinimas_faile(vector <studentai> grupe, const string& outputo_pavadinimas)
+template <typename Container>
+void spausdinimas_faile(const Container& grupe, const string& outputo_pavadinimas)
 {
     ofstream out (outputo_pavadinimas);
     out << std::left << setw(25) << "Pavarde" << setw(20) << "Vardas" << setw(20) << "Galutinis (Vid.)" << setw(20) << "Galutinis (Med.)" << endl;
@@ -186,7 +188,10 @@ double galutinis_med_sk(studentai &temp, int &mediana)
     gal_v=0.4*temp.mediana+0.6*temp.egzam;
     return gal_v;
 }
-void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) 
+
+//void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int &n) 
+template <typename Container>
+void nuskaitymas(const string& failo_pavadinimas, Container& grupe, int &n) 
 {
     std::ios::sync_with_stdio(false); // Optimize input speed
     ifstream in;
@@ -240,7 +245,9 @@ void nuskaitymas(const string& failo_pavadinimas, vector<studentai>& grupe, int 
     }
     in.close();
 }
-void skaiciavimas(vector <studentai> &grupe, int n)
+//void skaiciavimas(vector <studentai> &grupe, int n)
+template <typename Container>
+void skaiciavimas(Container& grupe, int n)
 {
     for (auto& m:grupe)
     {
