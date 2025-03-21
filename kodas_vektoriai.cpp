@@ -20,6 +20,7 @@ using std::endl;
 using std::vector;
 using std::string;
 using std::setw;
+using std::list;
 
 void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
 {
@@ -70,6 +71,16 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
         }
         if (strategijos_nr==2)
         {
+            vector<studentai> temp;
+            for (const auto& student : grupe)
+            {
+                if ((nr_rikiavimas == 3 && student.gal_vid < 5) || (nr_rikiavimas == 4 && student.gal_med < 5))
+                    nelaimingi.push_back(student);
+                else
+                    temp.push_back(student);
+            }
+            grupe = std::move(temp);
+            /*
             for (int i=0; i<grupe.size(); i++)
             {
                 if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) 
@@ -78,6 +89,7 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
                     grupe.erase(grupe.begin()+i);
                 }
             }
+            */
         }
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
@@ -109,7 +121,75 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
 }
 void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
 {
-    cout << "list" << endl;
+    vector <studentai> grupe;
+    auto failo_nuskaitymo_pradzia=std::chrono::high_resolution_clock::now();
+    nuskaitymas(failo_pavadinimas, grupe, n);
+    auto failo_nuskaitymo_pabaiga = std::chrono::high_resolution_clock::now();
+    auto failo_nuskaitymo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_nuskaitymo_pabaiga - failo_nuskaitymo_pradzia);
+    cout << "Failo iš " << nr_failo_dydis << " įrašų nuskaitymo laikas: " << std::fixed << std::setprecision(5) << failo_nuskaitymo_trukme.count() << "s" << endl;
+    skaiciavimas(grupe, n);
+    vector <studentai> galvociai, nelaimingi;
+    if (strategijos_nr==3)
+    {
+        auto failo3_sort_pradzia=std::chrono::high_resolution_clock::now();
+        auto perskyrimas = std::stable_partition(grupe.begin(), grupe.end(), [&](const studentai& s) {
+            return (nr_rikiavimas == 3 && s.gal_vid < 5) || (nr_rikiavimas == 4 && s.gal_med < 5);
+        });
+        auto failo3_sort_pabaiga = std::chrono::high_resolution_clock::now();
+        auto failo3_sort_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo3_sort_pabaiga - failo3_sort_pradzia);
+        cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su stable_partition funkcija: " << std::fixed << std::setprecision(5) << failo3_sort_trukme.count() << "s" << endl;
+        auto failo3_dalijimo_pradzia=std::chrono::high_resolution_clock::now();
+
+        nelaimingi.assign(grupe.begin(), perskyrimas);
+        galvociai.assign(perskyrimas, grupe.end());
+        auto failo3_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
+        auto failo3_dalijimo_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo3_dalijimo_pabaiga - failo3_dalijimo_pradzia);
+        cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo3_dalijimo_trukme.count() << "s" << endl;
+    } 
+
+    else 
+    {
+        auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
+        rikiavimas(nr_rikiavimas, grupe);
+        auto failo_sort_pabaiga = std::chrono::high_resolution_clock::now();
+        auto failo_sort_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo_sort_pabaiga - failo_sort_pradzia);
+        cout << nr_failo_dydis << " įrašų rūšiavimas didėjimo tvarka laikas, su sort funkcija: " << std::fixed << std::setprecision(5) << failo_sort_trukme.count() << "s" << endl;
+        
+        auto failo_dalijimo_pradzia=std::chrono::high_resolution_clock::now();
+        if (strategijos_nr==1)
+        {
+            for (int i=0; i<grupe.size(); i++)
+            {
+                if (nr_rikiavimas==3 && grupe[i].gal_vid<5 || nr_rikiavimas==4 && grupe[i].gal_med<5) nelaimingi.push_back(grupe[i]);
+                else galvociai.push_back(grupe[i]);
+            }
+        }
+        if (strategijos_nr==2)
+        {
+            vector<studentai> temp;
+            for (const auto& student : grupe)
+            {
+                if ((nr_rikiavimas == 3 && student.gal_vid < 5) || (nr_rikiavimas == 4 && student.gal_med < 5))
+                    nelaimingi.push_back(student);
+                else
+                    temp.push_back(student);
+            }
+            grupe = std::move(temp);
+        }
+        auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
+        auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
+        cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
+    }
+
+    spausdinimas_faile(nelaimingi, "nelaimingi.txt");
+    if (strategijos_nr==1 || strategijos_nr==3) spausdinimas_faile(galvociai, "galvociai.txt");
+    else if (strategijos_nr==2) spausdinimas_faile(grupe, "galvociai.txt");
+
+    cout << endl;
+    auto pilna_pabaiga = std::chrono::high_resolution_clock::now();
+    auto pilna_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(pilna_pabaiga - failo_nuskaitymo_pradzia);
+    cout << nr_failo_dydis << " įrašų testo laikas: " << std::fixed << std::setprecision(5) << pilna_trukme.count() << "s" << endl;
+    cout << endl << endl;
 }
 void deque_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_rikiavimas, int& n, int strategijos_nr)
 {
