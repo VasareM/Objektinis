@@ -39,6 +39,6 @@ programą galima paleisti dviem būdais
    cmake ..
 
    cmake --build . *(kompiliuoja)*
-
+   cd Debug   *(be jo po pertraukos neveikė)*
    .\Objektinis.exe *(paleidžia programą)*
    
