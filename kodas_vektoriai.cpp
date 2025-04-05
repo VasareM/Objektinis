@@ -57,7 +57,7 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
         auto failo3_dalijimo_trukme = std::chrono::duration_cast<std::chrono::duration<double>>(failo3_dalijimo_pabaiga - failo3_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo3_dalijimo_trukme.count() << "s" << endl;
     } 
-
+    
     else 
     {
         auto failo_sort_pradzia=std::chrono::high_resolution_clock::now();
@@ -75,18 +75,39 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
                 else galvociai.push_back(grupe[i]);
             }
         }
+        if (strategijos_nr == 2)
+        {
+            auto it = grupe.begin();
+            while (it != grupe.end() &&
+                ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5)))
+            {
+                ++it;
+            }
+
+            // (grupe.begin(), it) - nelaimingi
+            nelaimingi.insert(nelaimingi.end(), grupe.begin(), it);
+            grupe.erase(grupe.begin(), it);
+        }
+        /*
         if (strategijos_nr==2)
         {
-            vector<studentai> temp;
-            for (const auto& student : grupe)
+
+            while (!grupe.empty())
             {
-                if ((nr_rikiavimas == 3 && student.gal_vid < 5) || (nr_rikiavimas == 4 && student.gal_med < 5))
-                    nelaimingi.push_back(student);
+                if ((nr_rikiavimas == 3 && grupe.back().gal_vid < 5) || (nr_rikiavimas == 4 && grupe.back().gal_med < 5))
+                //dirbama su paskutiniu elementu
+                {
+                    nelaimingi.push_back(grupe.back());
+                    grupe.pop_back();
+                }
                 else
-                    temp.push_back(student);
+                {
+                    break;
+                }
             }
-            grupe = std::move(temp);
-        }
+                */
+        //}
+        
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
@@ -225,20 +246,22 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
                     galvociai.push_back(*it);
             }
         }
-            
         if (strategijos_nr==2)
         {
-            list<studentai> temp;
-            for (auto it = grupe.begin(); it != grupe.end(); ++it)
+            while (!grupe.empty())
             {
-                if ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5))
-                    nelaimingi.push_back(*it);
+                if ((nr_rikiavimas == 3 && grupe.back().gal_vid < 5) || (nr_rikiavimas == 4 && grupe.back().gal_med < 5))
+                //dirbama su paskutiniu elementu
+                {
+                    nelaimingi.push_back(grupe.back());
+                    grupe.pop_back();
+                }
                 else
-                    temp.push_back(*it);
+                {
+                    break;
+                }
             }
-            grupe = std::move(temp);
-        }
-        
+        }         
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
@@ -370,15 +393,19 @@ void deque_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_
             
         if (strategijos_nr==2)
         {
-            deque<studentai> temp;
-            for (auto it = grupe.begin(); it != grupe.end(); ++it)
+            while (!grupe.empty())
             {
-                if ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5))
-                    nelaimingi.push_back(*it);
+                if ((nr_rikiavimas == 3 && grupe.back().gal_vid < 5) || (nr_rikiavimas == 4 && grupe.back().gal_med < 5))
+                //dirbama su paskutiniu elementu
+                {
+                    nelaimingi.push_back(grupe.back());
+                    grupe.pop_back();
+                }
                 else
-                    temp.push_back(*it);
+                {
+                    break;
+                }
             }
-            grupe = std::move(temp);
         }
         
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
@@ -453,7 +480,7 @@ int main()
             string failo_pavadinimas;
             ///////////////
             /////////
-            int kiek_failu=5;
+            int kiek_failu=3;
             /////////
             ///////////////
             for (int i=0; i<kiek_failu; i++)
