@@ -88,25 +88,6 @@ void septintas_meniu(const string& failo_pavadinimas, int nr_failo_dydis, int nr
             nelaimingi.insert(nelaimingi.end(), grupe.begin(), it);
             grupe.erase(grupe.begin(), it);
         }
-        /*
-        if (strategijos_nr==2)
-        {
-
-            while (!grupe.empty())
-            {
-                if ((nr_rikiavimas == 3 && grupe.back().gal_vid < 5) || (nr_rikiavimas == 4 && grupe.back().gal_med < 5))
-                //dirbama su paskutiniu elementu
-                {
-                    nelaimingi.push_back(grupe.back());
-                    grupe.pop_back();
-                }
-                else
-                {
-                    break;
-                }
-            }
-                */
-        //}
         
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
@@ -246,22 +227,17 @@ void list_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_r
                     galvociai.push_back(*it);
             }
         }
-        if (strategijos_nr==2)
+        if (strategijos_nr == 2)
         {
-            while (!grupe.empty())
+            auto it = grupe.begin();
+            while (it != grupe.end() &&
+                ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5)))
             {
-                if ((nr_rikiavimas == 3 && grupe.back().gal_vid < 5) || (nr_rikiavimas == 4 && grupe.back().gal_med < 5))
-                //dirbama su paskutiniu elementu
-                {
-                    nelaimingi.push_back(grupe.back());
-                    grupe.pop_back();
-                }
-                else
-                {
-                    break;
-                }
+                ++it;
             }
-        }         
+            nelaimingi.insert(nelaimingi.end(), grupe.begin(), it);
+            grupe.erase(grupe.begin(), it);
+        }        
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
@@ -389,25 +365,18 @@ void deque_veiksmai(const string& failo_pavadinimas, int nr_failo_dydis, int nr_
                 else
                     galvociai.push_back(*it);
             }
-        }
-            
-        if (strategijos_nr==2)
+        } 
+        if (strategijos_nr == 2)
         {
-            while (!grupe.empty())
+            auto it = grupe.begin();
+            while (it != grupe.end() &&
+                ((nr_rikiavimas == 3 && it->gal_vid < 5) || (nr_rikiavimas == 4 && it->gal_med < 5)))
             {
-                if ((nr_rikiavimas == 3 && grupe.back().gal_vid < 5) || (nr_rikiavimas == 4 && grupe.back().gal_med < 5))
-                //dirbama su paskutiniu elementu
-                {
-                    nelaimingi.push_back(grupe.back());
-                    grupe.pop_back();
-                }
-                else
-                {
-                    break;
-                }
+                ++it;
             }
-        }
-        
+            nelaimingi.insert(nelaimingi.end(), grupe.begin(), it);
+            grupe.erase(grupe.begin(), it);
+        }         
         auto failo_dalijimo_pabaiga = std::chrono::high_resolution_clock::now();
         auto failo_dalijimo_trukme = std::chrono::duration_cast<std::chrono::seconds>(failo_dalijimo_pabaiga - failo_dalijimo_pradzia);
         cout << nr_failo_dydis << " įrašų dalijimo į dvi grupes laikas: " << std::fixed << std::setprecision(5) << failo_dalijimo_trukme.count() << "s" << endl;    
@@ -480,7 +449,7 @@ int main()
             string failo_pavadinimas;
             ///////////////
             /////////
-            int kiek_failu=3;
+            int kiek_failu=5;
             /////////
             ///////////////
             for (int i=0; i<kiek_failu; i++)
