@@ -1,0 +1,10 @@
+^C:\USERS\VASAR\ONEDRIVE\DESKTOP\VU\OBJEKTINIS PROGRAMAVIMAS\NAUJAS REPO\OBJEKTINIS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Vasar/OneDrive/Desktop/vu/Objektinis programavimas/naujas repo/Objektinis" "-BC:/Users/Vasar/OneDrive/Desktop/vu/Objektinis programavimas/naujas repo/Objektinis/build" --check-stamp-file "C:/Users/Vasar/OneDrive/Desktop/vu/Objektinis programavimas/naujas repo/Objektinis/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

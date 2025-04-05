@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Vasar\OneDrive\Desktop\vu\Objektinis programavimas\naujas repo\Objektinis\build\CMakeFiles\133ab8414a300b22f6b283aefbae0fae\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{C7DE2839-D9A0-3C81-B681-584EF6B56B06}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

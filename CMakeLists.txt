@@ -16,6 +16,19 @@ add_executable(Objektinis
     funkcijos.cpp
 )
 
+# Copy data files after build
+add_custom_command(TARGET Objektinis POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    "${CMAKE_SOURCE_DIR}/kursiokai.txt"
+    "${CMAKE_SOURCE_DIR}/sukurtas_studentai1000.txt"
+    "${CMAKE_SOURCE_DIR}/sukurtas_studentai10000.txt"
+    "${CMAKE_SOURCE_DIR}/sukurtas_studentai100000.txt"
+    "${CMAKE_SOURCE_DIR}/sukurtas_studentai1000000.txt"
+    "${CMAKE_SOURCE_DIR}/sukurtas_studentai10000000.txt"
+    "${CMAKE_BINARY_DIR}/debug/"
+)
+
+
 #file(GLOB SOURCES "src/*.cpp")
 
 
