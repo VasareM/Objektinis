@@ -1,3 +1,0 @@
-C:/Users/Vasar/OneDrive/Desktop/vu/Objektinis programavimas/naujas repo/Objektinis/build/CMakeFiles/Objektinis.dir
-C:/Users/Vasar/OneDrive/Desktop/vu/Objektinis programavimas/naujas repo/Objektinis/build/CMakeFiles/edit_cache.dir
-C:/Users/Vasar/OneDrive/Desktop/vu/Objektinis programavimas/naujas repo/Objektinis/build/CMakeFiles/rebuild_cache.dir
