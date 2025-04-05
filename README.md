@@ -14,7 +14,8 @@ Legenda:
 2 strategija: Bendro studentų konteinerio skaidymas panaudojant tik vieną naują konteinerį (kiti šalinami iš bendro);
 
 3 strategija: Bendro studentų konteinerio skaidymas panaudojant greičiausiai veikiančią (1 strategiją), į ją  įtraukiant į ją „efektyvius“ darbo su konteineriais metodus.
-![Image](https://github.com/user-attachments/assets/b7fafe09-36fe-4d07-957d-9479f319d84b)
+
+![Image](https://github.com/user-attachments/assets/db4529ba-bdd2-456d-942b-67332b074716)
 
 ### Instrukcija
 programą galima paleisti dviem būdais
@@ -28,17 +29,19 @@ programą galima paleisti dviem būdais
    
 2. naudojant **cmake** failą
 
-   ***į terminalą reikia įrašyti (jei kompiliuojama nauja programa):***
+   ***į terminalą reikia įrašyti (jei kompiliuojama visiškai nauja programa praleisti pirmą eilutę):***
    
-   rm -r build  *(jei jau turimas build aplankas, nerašyti jei kompiliuojama pirmą kartą)*
+    rm -r build
+   
+    mkdir build
 
-   mkdir build
+    cd build
 
-   cd build
+    cmake ..
 
-   cmake ..
+    cmake --build .
 
-   cmake --build . *(kompiliuoja)*
-   cd Debug   *(be jo po pertraukos neveikė)*
-   .\Objektinis.exe *(paleidžia programą)*
+    cd debug
+
+    .\Objektinis.exe
    
